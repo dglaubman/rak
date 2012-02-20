@@ -1,5 +1,3 @@
-
-
 publish = (message) ->
   body = new ByteBuffer()
   body.putString text, Charset.UTF8
