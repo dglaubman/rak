@@ -1,0 +1,48 @@
+<!--
+    
+
+    Copyright (c) 2007-2011, Kaazing Corporation. All rights reserved.
+    Modified by D Glaubman at  RMS to support RAK (Risk* with AMQP over Kaazing) prototype
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required for IE6/IE7 cross-origin support -->
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/demo.css" />
+    <title>RMS AMQP JavaScript Demo</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.js"></script>
+    <script type="text/javascript" src="/js/AmqpClient.js"></script>
+    <script type="text/javascript" src="/Client.js"></script>
+</head>
+<body  style="background-color:transparent">
+    <div id="login_div">
+        <span class="info">Connect to a AMQP broker</span>
+        <label for="url">Location</label><input id="url" size="25" ><br/>
+        <label for="virtualhost">Virtual Host</label><input id="virtualhost" size="25" value="/"><br/>
+        <label for="username">User Name</label><input id="username" size="25" value="guest"><br/>
+        <label for="password">Password</label><input type="password" id="password" size="25" value="guest"><br/>
+
+        <button id="connect">Connect</button>
+        <button id="disconnect">Disconnect</button>
+    </div>
+    <div id="exchange_div">
+        <span class="info">Publish a message to an exchange</span>
+        <label>Exchange</label>
+        <input id="publishExchange" size="25" value="exposures"><br/>
+        <label>Exchange Type</label><input id="exchangeType" size="25" value="topic"><br/>
+        <label>Message</label><input id="messagetext" size="25" value="Demo message"><br/>
+        <label>Topic</label><input id="topicText" size="25" value="edm.ready"><br/>
+        <button id="send" >Publish</button>
+        <button id="flowOn" >Flow On</button>
+        <button id="flowOff" >Flow Off</button>
+    </div>
+    <div id="console_div">
+        <span class="info">Log messages </span>
+        <div id="console"></div>
+        <button id="clear">Clear Log</button>
+    </div>
+</body>
+</html>

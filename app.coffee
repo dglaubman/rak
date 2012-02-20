@@ -1,5 +1,5 @@
 express = require('express')
-port = process.argv[2]
+port = process.argv[2] || 3003
 app = express.createServer()
 
 app.configure ->
@@ -12,8 +12,8 @@ app.configure 'development', ->
 app.get '/', (req, res) ->
   res.render 'index'
 
-app.get '/demo', (req, res) ->
-  res.render 'bp'
+app.get '/rak', (req, res) ->
+  res.render 'rak'
 
 app.get '/forex', (req, res) ->
   res.render 'forex'
