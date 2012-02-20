@@ -14,7 +14,7 @@ function makeURL(service, protocol) {
 	} else {
 		var hostPort = authority.split(':');
 		var ports = {
-			http : '80',
+			http : '8001',
 			https : '443'
 		};
 		console.log(location.protocol);

@@ -443,9 +443,9 @@ window.onresize = function () {
 	metricCnt.showStatus('Charts re-drawn.');
 }*/
 $(document).ready(function() {
-	fxClk.set();
+/*	fxClk.set();
 	fxClk.timer = setInterval(fxClk.update, 1000);
-	attachDnDEvents();
+*/	attachDnDEvents();
 	if (metricCnt.iDevice) {
 		document.getElementById('browserScript').style.display = 'none';
 		document.getElementById('mobileScript').style.display = 'block';
@@ -814,34 +814,6 @@ function closePositionWindow (that) {
 	fxPositions.isOpen = false;
 
 }
-//---- END Order Processing events
-
-function updateClocks() { // maintain locale clocks
-	var timeHere = new Date();
-	var utc, timeThere;
-	if (metricCnt.isOpen) {
-		metricCnt.repaint();
-		}
-	fxClk.date.innerHTML = timeHere.toDateString();
-	for (var i=0; i<fxClk.clockId.length; i++) {
-    	utc = timeHere.getTime() + (timeHere.getTimezoneOffset() * 60000); // convert to msec, add local time zone offset =  UTC time in msec	  
-		timeThere = new Date(utc + (3600000*(fxClk.offset[i]+fxClk.dst[i]))); // create new Date object for this city using supplied offset
-   		fxClk.clockId[i].innerHTML = timeThere.toLocaleTimeString();
-		if (timeThere.getDay() != timeHere.getDay()) {fxClk.clockId[i].innerHTML += ' +1';}
-		}
-	// jQuery easing
-	if (fxClk.cycleCount++ > (fxClk.easingSpeed / 1000)) {
-		fxClk.cycleCount = 0;
-		if (fxClk.showing == 5) {
-			fxClk.showing = 0;
-			document.getElementById('cityTime').style.left = '0px';
-			}
-		else {
-			fxClk.showing++;
-			$("div#cityTime").animate(({left: '-=170px'}));
-		}
-	}
-}
 // ----> START DnD and TOUCH EVENT HANDLERS -------------------------------------------------------------------------
 // attach event handlers (this saves a boatload of HTML and simplifies cross-platform variations)
 function attachDnDEvents() {
@@ -893,11 +865,11 @@ function iClick(evntObj) {
 	var imageSrc, dropIndex, dropHandle;
 	var pairName = this.firstChild.getAttribute('title');
 	
-	if (widgetList[pairName] !== undefined) { // duplicate
+/*	if (widgetList[pairName] !== undefined) { // duplicate
 		fxErr.popAlert(2, 1, pairName);
 		return;
 		}
-	// find a location to 'drop' the currency pair
+*/	// find a location to 'drop' the currency pair
 	for (dropIndex=0; dropIndex < dropLocList.length && dropLocList[dropIndex] == 'in-use'; dropIndex++) {}
 	if (dropIndex == dropLocList.length) {
 		fxErr.popAlert(2, 5, '');
@@ -981,11 +953,11 @@ function dragDrop(evntObj) {// 'this' = drop target; this event occurs BEFORE on
 	
 	this.style.background = null;
 	evntObj.dataTransfer.dropEffect='copy';
-	if (subscribed && !repositioning) {
+/*	if (subscribed && !repositioning) {
 		fxErr.popAlert(2, 1, payloadSymbol);
 		return false;
 		}
-	if (occupied) { // there's already a widget in this drop location; cleanup
+*/	if (occupied) { // there's already a widget in this drop location; cleanup
 		this.removeChild(this.firstChild);
 		widgetList[this.getAttribute('id')].clearValu(); // de-link the valuation table
 		delete widgetList[this.getAttribute('id')];
@@ -1205,7 +1177,7 @@ function executionHistory(serverData, symbol) { // to allow a diffeent column se
 	| websocket connections adapted from Richard Clark's portfolio-completed.html		|
 	|-----------------------------------------------------------------------------------|
 */
-wsUrl = makeURL ('jms', 'ws');
+wsUrl = makeURL ('amqp', 'ws');
 var wsCtl = { //Kaazing Websocket control structure, isolate from naming conflicts via this object
 	debug : 			false,
 	url : 				wsUrl, // e.g. ws://localhost:80/jms

@@ -105,8 +105,9 @@ body {
 	width: 238px; /* 68 + 170; reset by js to 68 when clocks are set */
 	float:left;
 	height: 28px;
-	/*background-image: url('../images/greystripevt.gif');*/
+	background-image: url('/img/rms.png');
 	border-top-left-radius: 10px;
+	background-repeat: no-repeat;
 	-moz-border-radius-topleft: 10px;
 }
 #mastTitle {
@@ -236,22 +237,26 @@ body {
 	left: 450px;
 }
 .sidebar {
-	width: 125px;
+	width: 120px;
 	float: left;
 	height: 342px;
 	overflow: hidden;
 	background-color: #4c4c4c;
 	border-right: 1px solid #666;
 }
+img.server {
+	width: 110px;    /* was 22 */
+	height: 60px;    /* was 14 */
+	margin: 0px 0px 0px 0px;
+}
 img.flag {
-	width: 22px;
-	height: 14px;
-	margin: 0px 10px 0px 10px;
+	width: 80px;    /* was 22 */
+	height: 50px;    /* was 14 */
+	margin: 0px 0px 0px 0px;
 }
 .addPlus {
-	width: 25px;
-	float: right;
-	color: #fff;
+	width: 15px;     /* was 25 */
+	float: right; 
 	background-color: transparent;
 }
 .sidebar nav ul {
@@ -259,9 +264,9 @@ img.flag {
 	border-top: 1px solid #666;
 }
 .sidebar nav ul li {
-	padding: 5px 5px 5px 5px;
+/*	padding: 5px 5px 5px 5px; */
 	display: block;
-	width: 125px;  /* for IE6 */
+	width: 100px;  /* for IE6 */ /* was 125 */
 	text-decoration: none;
 	color: #fff;
 	border-bottom: 1px solid #666;
@@ -285,7 +290,7 @@ img.flag {
 }
 /* START container and classes for the FX currency pair widget */
 .mktBlock, mktBlockLastRow {
-	width: 166px;
+	width: 150px;
 	float: left;
 	height: 131px;
 	overflow: hidden;
@@ -298,7 +303,7 @@ img.flag {
 }
 .fxWidgetPrototype {
 	width: 166px;
-	height: 131px;
+	height: 150px;
 	background-image: url('../images/mktpanel.jpg');
 	background-repeat: no-repeat;
 }
@@ -506,7 +511,7 @@ input.numbers {
 	border-top: 1px solid #888;
 }
 #section1 {
-	width: 730px;
+	width: 860px;
 	float: left;
 	height: 342px;
 	position: relative;
