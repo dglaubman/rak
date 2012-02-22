@@ -27,6 +27,12 @@ $ ->
       headers = {}
       @publishChannel.publishBasic body, headers, exchange, routingKey, false, false
 
+    startServer: (name) =>
+      @publish 'workX', "start #{name}"
+
+    stopServer: (name) =>
+      @publish 'workX', "stop #{name}"
+
     flow: ( onOff ) =>
       @exposureChannel.flowChannel onOff
       @serverChannel.flowChannel onOff
@@ -49,7 +55,6 @@ $ ->
 
     publishChannelOpenHandler: (evt) =>
       @channelOpenHandler evt.channel, exchangeName, exchangeTypeName, 'publish'
-      updateConnectionButtons true
 
     exposureChannelOpenHandler: (evt) =>
       @channelOpenHandler evt.channel, 'exposures', 'topic'
@@ -84,10 +89,15 @@ $ ->
       @serverChannel.declareQueue(sQName, not passive, not durable, exclusive, autoDelete, not noWait).
         bindQueue(sQName, 'servers', "#", not noWait).
         consumeBasic sQName, tag, not noLocal, noAck, noWait, not exclusive
-      updateConnectionButtons true
 
 
   console = document.getElementById("console")
+
+  # Safari doesn't support details/summary, so using this polyfill
+  $('html').addClass(if $.fn.details.support then 'details' else 'no-details')
+#  $('body').prepend(if $.fn.details.support then 'Native support detected; the plugin will only add ARIA annotations and fire custom open/close events.' else 'Emulation active; you are watching the plugin in action!');
+
+  $('details').details()
 
   url = document.getElementById("url")
   username = document.getElementById("username")
@@ -96,6 +106,8 @@ $ ->
 
   connect = document.getElementById("connect")
   disconnect = document.getElementById("disconnect")
+  startCdl = document.getElementById("startCdl")
+  startBroker = document.getElementById("startBroker")
 
   clear = document.getElementById("clear")
   publishExchange = document.getElementById("publishExchange")
@@ -111,6 +123,22 @@ $ ->
   exchangeTypeName = exchangeType.value
   routingKey = topicText.value
 
+  smallEdmInputRate = document.getElementById("smallEdmInputRate")
+  smallEdmSlider = document.getElementById("smallEdmSlider")
+  smallEdmSlider.onchange = -> (smallEdmInputRate.textContent = @value)
+  smallEdmSlider.onchange()
+
+  mediumEdmInputRate = document.getElementById("mediumEdmInputRate")
+  mediumEdmSlider = document.getElementById("mediumEdmSlider")
+  mediumEdmSlider.onchange = -> (mediumEdmInputRate.textContent = @value)
+  mediumEdmSlider.onchange()
+
+  largeEdmInputRate = document.getElementById("largeEdmInputRate")
+  largeEdmSlider = document.getElementById("largeEdmSlider")
+  largeEdmSlider.onchange = -> (largeEdmInputRate.textContent = @value)
+  largeEdmSlider.onchange()
+
+
   log = (message) ->
     pre = document.createElement("pre")
     pre.style.wordWrap = "break-word"
@@ -118,14 +146,6 @@ $ ->
     console.insertBefore pre, console.firstChild
     console.removeChild console.lastChild  while console.childNodes.length > 500
 
-  updateConnectionButtons = (connected) ->
-    connect.disabled = connected
-    disconnect.disabled = not connected
-    send.disabled = not connected
-    flowOn.disabled = not connected
-    flowOff.disabled = not connected
-
-  updateConnectionButtons false
   client = new Client( log )
   client.onmessage = (m) =>
      body = m.body.getString(Charset.UTF8)
@@ -141,8 +161,15 @@ $ ->
 
     client.connect url.value, virtualhost.value, credentials
 
+
   disconnect.onclick = ->
     client.disconnect()
+
+  startCdl.onclick = ->
+    client.startServer 'cdl'
+  startBroker.onclick = ->
+    client.startServer 'broker'
+
 
   send.onclick = ->
     if not messagetext.value? or messagetext.value.length is 0

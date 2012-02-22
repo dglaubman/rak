@@ -2,25 +2,60 @@
  * Copyright (c) 2007-2011, Kaazing Corporation. All rights reserved.
  */
 
-body {
-        font-family: Helvetica, Arial, sans-serif;
-        color:#000000;
-        margin-top: 0px;
-        }
-        
-p {
-  /* setup some more readable paragraph spacing */
-  margin-top: 0px;
-  margin-bottom: 10px;
+
+
+body.container
+{
+width:100%;
+margin:0px;
+border:1px solid gray;
+line-height:150%;
 }
 
-p.code {
-        font-family:"Courier New", Courier, monospace;
-        color:#FFFFFF;
-        background-color:#44687d;
-        margin: 0px 20px 10px 10px;
-        padding: 10px 10px; 
-        }
+header,footer
+{
+padding:0.5em;
+color:white;
+background-color: gray;
+clear:left;
+}
+
+header > h1
+{
+padding:0;
+margin:0;
+}
+
+section.left
+{
+float:left;
+width:160px;
+margin:0;
+padding:1em;
+border-right:1px solid gray;
+}
+
+section > ul {
+	list-style: none;
+}
+section > ul > li {
+    text-decoration: none;
+}
+section > ul > li > input {
+
+   width: 100px;
+}
+
+
+section.content {
+    margin-left:190px;
+    padding:1em;
+}
+
+
+html {
+    font-family: Helvetica, Arial, sans-serif;
+}
 
 h1,h2, h3, h4, h5 {
         /* Kaazing blue */
@@ -36,12 +71,13 @@ h1 {
 
 h2 {
         font-size: 175%;
+	text-align: center;
 }
 
 h3 {
         font-size: 150%;
         /* Kaazing Web Orange */
-        color: #f37333;
+        color: green;
 }
 
 h4 {
@@ -53,6 +89,76 @@ h5 {
         font-weight: bolder;
 }
 
+.widget {
+    height: 300px:
+    width: 250px;
+    color: red;
+}
+
+.spacer {
+    visibility: hidden;
+    height: 15px;
+}
+
+#console { 
+        position:relative;
+        float:left;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch; 
+        width: 200px;
+	height: 200px;
+        }
+
+
+.serverwidget {
+    position:relative;
+        float:left;
+        padding: 0px 0px 10px 10px;
+        width: 160px;
+	height: 50px;
+	display: none;
+        }
+
+
+.history {
+        color: #44687d;
+        border-top: 3px solid #44687d;
+        border-bottom: 3px solid #44687d;
+}
+
+
+.serverload {
+    width: 80px;
+    height: 40px;
+}
+.serverloadgraph {
+        background-color: green;
+	color: red;
+	height: 25%;
+	width: 40px;
+	float: right;
+        position: relative;
+	display: block;
+
+}
+
+.nodisplay {
+    display: none;
+}        
+p {
+  /* setup some more readable paragraph spacing */
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+p.code {
+        font-family:"Courier New", Courier, monospace;
+        color:#FFFFFF;
+        background-color:#44687d;
+        margin: 0px 20px 10px 10px;
+        padding: 10px 10px; 
+        }
+
 a {
         text-decoration: none;
 }
@@ -62,236 +168,28 @@ a:hover {
 }
 
 ul.arrow-2 li {
-        background: url(../images/arrow-2.png) 2px 2px no-repeat;
+        background: url(../img/arrow-2.png) 2px 2px no-repeat;
         list-style: none;
         padding-left: 25px;
         padding-bottom: 5px;
         }
 
-img {
-        border: 0px none;
-}
 
-pre {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        }
-
-/* @group Notice Styles */
-
-span.alert, div.alert,
-span.info, div.info,
-span.download, div.download,
-span.note, div.note {
-        display: block;
-        padding: 10px 0px 10px 45px;
-}
-
-span.alert, div.alert {
-        color: #c00;
-        border-top: 3px solid #fe7b7a;
-        border-bottom: 3px solid #fe7b7a;
-        background: #ffffff url(../images/status-alert.png) 10px 50% no-repeat;
-        margin: 0px 0px 10px 0px;
-}
-
-span.info, div.info {
-        color: #44687d;
-        border-top: 3px solid #44687d;
-        border-bottom: 3px solid #44687d;
-        background: #ffffff url(../images/status-info.png) 10px 50% no-repeat;
-        margin: 0px 0px 10px 0px;
-}
-
-span.note, div.note {
-        color: #cd5a13;
-        border-top: 3px solid #f37333;
-        border-bottom: 3px solid #f37333;
-        background: #ffffff url(../images/status-note.png) 10px 50% no-repeat;
-        margin: 0px 0px 10px 0px;
-}
-
-span.download, div.download {
-        color: #5a8e22;
-        border-top: 3px solid #5a8e22;
-        border-bottom: 3px solid #5a8e22;
-        background: #ffffff url(../images/status-download.png) 10px 50% no-repeat;
-        margin: 0px 0px 10px 0px;
-}
-
-/* @end */
-
-/* @Code formatting for span elements */
-span.code, div.code {
-        font-family:"Courier New", Courier, monospace;
-        color:#FFFFFF;
-        background-color:#44687d;
-        margin: 0px 0px 10px 0px;
-        padding: 10px 20px; 
-        }
-/* @end */
-
-        
-#overall_frame {
-        position:relative;
-        left: 115px;
-        width: 970px;
-        }
-
-#wrapper {
-    position:relative;
-        float:left;
-    margin: 0pt auto;
-        text-align:left;
-        padding: 0pt;
-        }
-        
-#header {
-        height: 98px;
-        background: url(../images/menu.png);
-        background-repeat:no-repeat;
-        }
-        
-#menu {
-        position:relative;
-        top: 6px;
-        left: 15px;
-        height: 80px;
-        width:970px;
-        }
-        
-#menu a.enterprise {
-        color:#C0C0C0;
-        }
-
-#menu a {
-        color:#FFFFFF;
-        }
-        
-#menu a:hover {
-        color:#FFFF00;
-        }
-
-#menu li {
-        list-style-type: none;
-        line-height:85%;
-        }
-
-#menu .demoCategory {
-        color:#FFFFFF;
-        font-style:italic;    
-        font-weight:lighter;
-        font-size:80%; 
-        padding-top: 3px;
-        padding-bottom: 2px;
-        }
-        
-#menu .demoCategory a {
-        font-style:normal; 
-        font-weight:bold;
-        }        
-
-#menu ul ul li {
-        color: #FFFFFF;
-        list-style-type: circle;
-        }
-        
-#menu ul ul li a {
-        font-style:normal;
-        font-weight:bold;
-        padding: 0px 20px 0px 0px;
-        font-size:smaller;
-        }
-
-#menu ul {
-        margin:0;
-        float: left;
-        padding-left: 15px;
-        }
-
-#menu #demoIndex {
-        float: none;
-        padding-left: 0px;
-        position: absolute;
-        bottom: 0px;
-        right: 26px; 
-        }
-
-#content {
-    background: url(../images/background.png) top left no-repeat;
-        position:relative;
-        margin: 0px 0px;
-        width:100%;
-        }
-
-/*
-#main_home {
-    background: url(../images/side_banner.jpg) top right no-repeat;
-        position:relative;
-        padding: 0px 130px 10px 20px;
-        }
-*/
-
-#main {
-        position:relative;
-        top: 10px;
-        left: 20px;
-        width:930px;
-        height: 620px;
-        }
-
-#main_header {
-        position:relative;
-        float:left;
-        padding: 0px 0px;
-        width: 800px;
-        }
-
-#table_header {
-        position:relative;
-        float:left;
-        padding: 0px 0px;
-        width: 800px;
-        height: 470px;
-        }
-
-label, .label {
-        float: left;
-        width: 120px;
-        font-weight: bold;
-}
-
-input {
-        width: 180px;
-        margin-bottom: 5px;
-        clear:right;
-}
-
-select {
-        margin-bottom: 5px;
-}
-
-textarea{
-        width: 250px;
-        height: 150px;
-        margin-bottom: 5px;
-        clear:right;
-}
-
-.boxes{
-        width: 1em;
-}
-
-br{
-        clear: left;
-}
-
-#login_div {
+ #login_div {
         position:relative;
         float:left;
         padding: 0px 0px 10px 0px;
         width:380px;
         height: 200px;
+        }
+
+
+#connection_div {
+        position:relative;
+        float:left;
+        padding: 0px 0px 10px 0px;
+        width:200px;
+        height: 50px;
         }
         
 #subscribe_div {
@@ -310,279 +208,35 @@ br{
         height: 210px;
         }
 
-#transaction_div {
-        position:relative;
-        float:left;
-        padding: 0px 0px 10px 0px;
-        width: 380px;
-        height: 180px;
-        }
 
-#console_div {
-    position:relative;
-        float:left;
-        padding: 0px 0px 10px 10px;
-        width: 420px;
-        }
 
-#connect_div {
-        position:relative;
-        float:left;
-        padding: 0px 0px 10px 0px;
-        width:380px;
-        height: 100px;
-        }
-        
-#console { 
-        position:relative;
-        float:left;
-        overflow-y: scroll; 
-        width: 420px;
-        height: 170px;
-        }
+
+details, summary { display: block; }
+			/* Apply a pointer cursor and style the background upon hover to indicate <summary> is a clickable element. */
+			/* These styles can be applied regardless of whether the fallback is needed */
+			summary { cursor: pointer; }
+			summary:hover, summary:focus { background: #ddd; }
+
+.nodisplay {
+    display: none;
+}
+
 
 /*
 #footer {
         position:relative;
         height: 124px;
-        background: url(../images/footer.png) 100% 0 repeat-x;
+        background: url(../img/footer.png) 100% 0 repeat-x;
         }       
 */
         
-#chat_select {
-        position:relative;
-        float:left;
-        padding: 0px 0px 10px 0px;
-        width:258px;
-        height: 500px;
-        }
-        
-#chat_roster {
-        position:relative;
-        float:left;
-        padding: 0px 0px 10px 10px;
-        width:300px;
-        height: 500px;
-
-        }
-        
-#chat_messages {
-        position:relative;
-        float:left;
-        padding: 0px 0px 10px 10px;
-        width:300px;
-        height: 500px;
-        }
-
-#pds_messages {
-    position: relative;
-    float: left;
-    padding: 0px 0px 10px 10px;
-    width: 610px;
-    height: 500px;
-    }
-
-#pds_messages .chat_text {
-    height: 285px;
-    }
-
-#pds_messages .chat_window {
-    margin: 0px 0px;
-    }
-        
-#openfire {
-        position:absolute;
-        float:left;
-        padding: 0px 0px 10px 0px;
-        width:258px;
-        height: 400px;
-        }
-        
-#gtalk {
-        position:absolute;
-        float:left;
-        padding: 0px 0px 10px 0px;
-        width: 258px;
-        height: 400px;
-        }       
-        
-        
-#roster {
-        position:relative;
-        float:left;
-        padding: 0px 0px 5px 10px;
-        width:265px;
-        height: 370px;
-        background: #ffffff;
-        border: 3px ridge #f37333;
-        margin-left: 10px;
-        margin-bottom: 5px;
-        overflow-y: scroll;     
-        }       
-        
-.chat_prompt {
-        color: #44687d;
-}
-        
-.chat_friend {
-        border-bottom: 1px dotted #44687d;
-        margin-right: 12px;
-        color: #44687d;
-    }
-
-.chat_friend a:visited {
-        color: #44687d;
-    }
-
-.chat_friend:hover {
-        background: url(../images/grid_gradient.png) 0% 0% repeat-x;
-    }
-
-
-.chat_status, .chat_show {
-        font-size: 10px;
-    }
-
-.chat_show {
-        font-weight: bold;
-    }   
-    
-.chat_show_available, .chat_show_chat {
-        color: green;
-    }    
-    
-.chat_show_dnd {
-        color: red;
-    }     
-
-.chat_show_xa, .chat_show_away {
-        color: orange;
-    }     
-
-.chat_show_offline { 
-        color: gray;
-    } 
-
-.chat_window {
-        height: 420px;
-        margin: 0px 10px 0px 10px;
-}
-
-.chat_text {
-        display: block;
-        border: 3px ridge #f37333;
-        margin-bottom: 5px;
-        height: 375px;
-        overflow-y: scroll;     
-}
-
-.chat_address {
-        padding: 0px 0px 0px 0px;
-        margin: 0px 0px 0px 0px;
-        height: 45px;
-}
-
-.chat_textentry {
-        padding: 0px 0px 0px 0px;
-        margin-bottom: 0px;
-        margin: 0px 0px 0px 0px;
-}
-
-
-.chat_line, .chat_me, .chat_user1, .chat_user2, .chat_user3, .chat_user4, .chat_user5 {
-        font-size: 14px;
-}
-
-.chat_line {
-}
-
-.chat_me, .chat_me a:visited {
-        color: #f37333;
-}
-
-.chat_user1, .chat_user1 a:visited {
-        color: #44687d;
-}
-
-.chat_user2, .chat_user2 a:visited {
-        color: #7d5743;
-}
-
-.chat_user3, .chat_user3 a:visited {
-        color: #83c9f2;
-}
-
-.chat_user4, .chat_user4 a:visited {
-        color: #f2cbb6;
-}
-
-.chat_user5, .chat_user5 a:visited {
-        color: #33acf2;
-}
 
 .tdHeader{
         text-align:left;
 }
 
-.stockTable {
-        font-size: 14px;
-    border-color: #44687d;
-    border-bottom-width: 1px solid;
-}
-
-.stockTable th {
-        color: #ffffff;
-    background-color: #ff5113;
-    border-color: #cccccc;
-    border-width: 0px 1px 1px 0px;
-    border-style: solid;
-    padding-bottom: 3px;
-}
-
-.stockTable tr td {
-    height: 22px;
-    border-color: #cccccc;
-    border-width: 0px 0px 1px 0px;
-    border-style: solid;
-}
-
-.company {
-        text-align:left; 
-    padding-left:10px;
-}
-
-.ticker {
-        text-align:left; 
-    padding-left:10px;
-}
-
-.change {
-    text-align:right;
-    padding-right:10px;
-}
-
-.percent {
-    text-align:right;
-    padding-right:10px;
-}
-
-.price {
-    text-align:right;
-    padding-right:10px;
-}
-
-.upChange {
-        background:url(../images/up.png) center left no-repeat;
-        position:relative;
-
-        font-weight:bold;
-        color:green;
-        text-align:right; 
-    padding-right:10px;
-}
-
 .downChange {
-        background:url(../images/down.png) center left no-repeat;
+        background:url(../img/down.png) center left no-repeat;
         position:relative;
 
         font-weight:bold;
@@ -612,17 +266,22 @@ br{
         padding-left:5px
 }
 
-.activeHelpText{
-        background-color:#FFFFFF;
-        border:1px solid black;
-        color:#999999;
-        text-align:center;
 
-}
-
-.inactiveHelpText {
-        background-color:#FFFFFF;
-        border:1px solid black;
-        color:#000000;
-        text-align:center;
-}
+			.no-details details > * { display: none; }
+			/* This doesn’t work very well in Firefox 3.6.x */
+			/* .no-details details[open] > * { display: block; } */
+			/* The following doesn’t toggle correctly in WebKit:
+			.no-details details summary:before { content: '► '; }
+			.no-details details[open] summary:before { content: '▼ '; }
+			*/
+			/* And yes, it should really be ::before, but that doesn’t work in IE8 */
+			.no-details details summary:before { float: left; width: 20px; content: '► '; }
+			.no-details details.open summary:before { content: '▼ '; }
+			/* For IE6 and IE7, who don’t support generated content, you could use padding-left + a background image instead */
+			/* I really couldn’t be bothered though. */
+			/*
+			.no-details details summary { padding-left: 20px; background: url(img/arrow-sprite.png) no-repeat 0 0; }
+			.no-details details.open summary { background-position: 0 -20px; }
+			*/
+			/* Make sure summary remains visible */
+			.no-details details summary { display: block; }

@@ -1,3 +1,119 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <!-- Required for IE6/IE7 cross-origin support -->
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="css/k2.css" />
+    <title>rak -- RMS over AMQP and Kaazing</title>
+</head>
+
+<body class="container">
+  <header><h1>rak -- RMS over AMQP and Kaazing</h1></header>
+ 
+  <section class="left">
+    
+    <ul>
+      <li><h4>Start Server</h4></li>
+      <li><button id="startCdl"><h4>CDL Server</h4></button></li>
+      <li class="spacer"></li>
+      <li><button id="startBroker"><h4>Broker</h4></button></li>
+      <li class="spacer"></li>
+      <hr/>
+      <li><h4>Upload rate</h4></li>
+      <li>
+	<p>Small EDM</p>
+	<span>Per minute: <label for="smallEdmSlider" id="smallEdmInputRate">0</label></span>
+	<input id="smallEdmSlider"  type="range" min="0" max="30" value="10" /> 
+      </li>
+      <li class="spacer"></li>
+      <hr/>
+      <li class="spacer"></li>
+      <li>
+	<p>Medium EDM</p>
+	<span>Per minute: <label for="mediumEdmSlider" id="mediumEdmInputRate">0</label></span>
+	<input id="mediumEdmSlider"  type="range" min="0" max="30" value="10" /> 
+      </li>
+      <li class="spacer"></li>
+      <hr/>
+      <li class="spacer"></li>
+      <li>
+	<p>Large EDM</p>
+	<span>Per minute: <label for="largeEdmSlider" id="largeEdmInputRate">0</label></span>
+	<input id="largeEdmSlider"  type="range" min="0" max="30" value="10" /> 
+      </li>
+    </ul>
+  </section>
+
+
+  <section class="content">
+    <table>
+      <tr>
+	<td id="0" class="widget"></td>
+	<td id="1" class="widget"></td>
+	<td id="2" class="widget"></td>
+	<td id="3" class="widget"></td>
+      </tr>
+      <tr>
+	<td id="4" class="widget"></td>
+	<td id="5" class="widget"></td>
+	<td id="6" class="widget"></td>
+	<td id="7" class="widget"></td>
+      </tr>
+    </table>
+  </section>
+
+  <footer>
+    <section class="copyright"> <p> Parts Copyright 2012, Kaazing. </p> </section>
+	<section class="nodisplay">
+	  <div id="connection_div">
+            <button id="connect">Connect</button>
+            <button id="disconnect">Disconnect</button>
+	  </div>
+	  <div id="exchange_div">
+            <span class="info">Publish a message to an exchange</span>
+            <label>Exchange</label>
+            <input id="publishExchange" size="25" value="workX"><br/>
+            <label>Exchange Type</label><input id="exchangeType" size="25" value="direct"><br/>
+            <label>Message</label><input id="messagetext" size="25" value="start cdl"><br/>
+            <label>Topic</label><input id="topicText" size="25" value="exec"><br/>
+            <button id="send" >Publish</button>
+            <button id="flowOn" >Flow On</button>
+            <button id="flowOff" >Flow Off</button>
+	  </div>
+	  
+	  <div class="serverwidget">
+	    <div class="serverlabel">
+	      CDL/2
+	    </div>
+	    <div class="serverload">Load: <span class="serverloadgraph"></span></div>
+	    <div class="history">
+	      <details>
+		<summary>History</summary>
+		<div id="console"></div>
+		<div><button id="clear">Clear Log</button></div>
+              </details>
+	    </div>
+	  </div>
+	  
+	  <div id="login_div">
+            <span class="info">Connect to a AMQP broker</span>
+            <label for="url">Location</label><input id="url" size="25" ><br/>
+            <label for="virtualhost">Virtual Host</label><input id="virtualhost" size="25" value="/"><br/>
+            <label for="username">User Name</label><input id="username" size="25" value="guest"><br/>
+            <label for="password">Password</label><input type="password" id="password" size="25" value="guest"><br/>
+	  </div>
+	  
+	</section>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="/js/jquery.details.js"></script>
+	<script type="text/javascript" src="/js/AmqpClient.js"></script>
+	<script type="text/javascript" src="js/Client.js"></script>
+	
+  </footer>
+</body>
 <!--
     
 
@@ -5,44 +121,4 @@
     Modified by D Glaubman at  RMS to support RAK (Risk* with AMQP over Kaazing) prototype
 -->
 
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- Required for IE6/IE7 cross-origin support -->
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="css/k2.css" />
-    <title>RMS AMQP JavaScript Demo</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.js"></script>
-    <script type="text/javascript" src="/js/AmqpClient.js"></script>
-    <script type="text/javascript" src="js/Client.js"></script>
-</head>
-<body  style="background-color:transparent">
-    <div id="login_div">
-        <span class="info">Connect to a AMQP broker</span>
-        <label for="url">Location</label><input id="url" size="25" ><br/>
-        <label for="virtualhost">Virtual Host</label><input id="virtualhost" size="25" value="/"><br/>
-        <label for="username">User Name</label><input id="username" size="25" value="guest"><br/>
-        <label for="password">Password</label><input type="password" id="password" size="25" value="guest"><br/>
-
-        <button id="connect">Connect</button>
-        <button id="disconnect">Disconnect</button>
-    </div>
-    <div id="exchange_div">
-        <span class="info">Publish a message to an exchange</span>
-        <label>Exchange</label>
-        <input id="publishExchange" size="25" value="exposures"><br/>
-        <label>Exchange Type</label><input id="exchangeType" size="25" value="topic"><br/>
-        <label>Message</label><input id="messagetext" size="25" value="Demo message"><br/>
-        <label>Topic</label><input id="topicText" size="25" value="edm.ready"><br/>
-        <button id="send" >Publish</button>
-        <button id="flowOn" >Flow On</button>
-        <button id="flowOff" >Flow Off</button>
-    </div>
-    <div id="console_div">
-        <span class="info">Log messages </span>
-        <div id="console"></div>
-        <button id="clear">Clear Log</button>
-    </div>
-</body>
 </html>
