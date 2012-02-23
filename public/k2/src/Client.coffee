@@ -1,10 +1,10 @@
 $ ->
 
   class Client
+
     constructor: (@log) ->
       @amqp = new AmqpClient
       @amqp.addEventListener "close", =>
-        updateConnectionButtons false
         @log "DISCONNECTED"
 
     connect: ( url, virtualhost, credentials ) ->
@@ -20,7 +20,7 @@ $ ->
     disconnect:  =>
       @amqp.disconnect()
 
-    publish:  ( exchange, text ) =>
+    publish:  ( exchange, text, routingKey ) =>
       body = new ByteBuffer()
       body.putString text, Charset.UTF8
       body.flip()
@@ -28,10 +28,10 @@ $ ->
       @publishChannel.publishBasic body, headers, exchange, routingKey, false, false
 
     startServer: (name) =>
-      @publish 'workX', "start #{name}"
+      @publish 'workX', "start #{name}", 'exec'
 
     stopServer: (name) =>
-      @publish 'workX', "stop #{name}"
+      @publish 'workX', "stop #{name}", 'exec'
 
     flow: ( onOff ) =>
       @exposureChannel.flowChannel onOff
@@ -44,17 +44,17 @@ $ ->
       @log "#{msg.args.routingKey}> #{msg.body.getString( Charset.UTF8 )}"
 
     channelOpenHandler: (channel, exchange, type, label) =>
-      @log "open '#{label || exchange}' channel ok"
+      @log "open '#{exchange}' channel ok"
       channel.declareExchange exchange, type, false, false, false
       channel.addEventListener "declareexchange", =>
-        @log "declare '#{label || exchange}' exchange ok"
+        @log "declare '#{exchange}' exchange ok"
       channel.addEventListener "close", =>
-        @log "close '#{label || exchange}' channel ok"
+        @log "close '#{exchange}' channel ok"
       @channelsReady++
       @doBind()  if @channelsReady is 3
 
     publishChannelOpenHandler: (evt) =>
-      @channelOpenHandler evt.channel, exchangeName, exchangeTypeName, 'publish'
+      @channelOpenHandler evt.channel, 'workX', 'direct'
 
     exposureChannelOpenHandler: (evt) =>
       @channelOpenHandler evt.channel, 'exposures', 'topic'
@@ -104,24 +104,12 @@ $ ->
   password = document.getElementById("password")
   virtualhost = document.getElementById("virtualhost")
 
-  connect = document.getElementById("connect")
-  disconnect = document.getElementById("disconnect")
   startCdl = document.getElementById("startCdl")
   startBroker = document.getElementById("startBroker")
 
   clear = document.getElementById("clear")
-  publishExchange = document.getElementById("publishExchange")
-  messagetext = document.getElementById("messagetext")
-  exchangeType = document.getElementById("exchangeType")
   topicText = document.getElementById("topicText")
 
-  send = document.getElementById("send")
-  flowOn = document.getElementById("flowOn")
-  flowOff = document.getElementById("flowOff")
-
-  exchangeName = publishExchange.value
-  exchangeTypeName = exchangeType.value
-  routingKey = topicText.value
 
   smallEdmInputRate = document.getElementById("smallEdmInputRate")
   smallEdmSlider = document.getElementById("smallEdmSlider")
@@ -146,14 +134,16 @@ $ ->
     console.insertBefore pre, console.firstChild
     console.removeChild console.lastChild  while console.childNodes.length > 500
 
-  client = new Client( log )
-  client.onmessage = (m) =>
-     body = m.body.getString(Charset.UTF8)
-     log "CONSUME: <strong> " + body + "</strong>"
+  client = null
+
   connect.onclick = ->
     client = new Client( log )
     tenant =   " on " + virtualhost.value
     log "CONNECTING: " + url.value + " " + username.value + tenant
+    client.onmessage = (m) =>
+      body = m.body.getString(Charset.UTF8)
+      log "CONSUME: <strong> " + body + "</strong>"
+      body.rewind()
 
     credentials =
       username: username.value
@@ -171,20 +161,9 @@ $ ->
     client.startServer 'broker'
 
 
-  send.onclick = ->
-    if not messagetext.value? or messagetext.value.length is 0
-      alert "Enter a valid string for message"
-      return
-    client.publish publishExchange.value, messagetext.value
-
   clear.onclick = ->
     console.removeChild console.lastChild  while console.childNodes.length > 0
 
-  flowOn.onclick = ->
-    client.flow true
-
-  flowOff.onclick = ->
-    client.flow false
 
   hash = location.hash
 #  location.href = "demo.html#amqp"  if hash is ""
@@ -200,4 +179,4 @@ $ ->
   url.value = location.protocol.replace("http", "ws") + "//" + authority + "/amqp"
   connect.disabled = null
   disconnect.disabled = "disabled"
-
+  connect.click()

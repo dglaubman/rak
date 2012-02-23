@@ -67,6 +67,7 @@ h1,h2, h3, h4, h5 {
 
 h1 { 
         font-size: 200%;
+	text-align: center;
 }
 
 h2 {
@@ -116,7 +117,6 @@ h5 {
         padding: 0px 0px 10px 10px;
         width: 160px;
 	height: 50px;
-	display: none;
         }
 
 
@@ -222,14 +222,6 @@ details, summary { display: block; }
 }
 
 
-/*
-#footer {
-        position:relative;
-        height: 124px;
-        background: url(../img/footer.png) 100% 0 repeat-x;
-        }       
-*/
-        
 
 .tdHeader{
         text-align:left;
