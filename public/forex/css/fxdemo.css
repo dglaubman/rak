@@ -49,10 +49,7 @@ footer, .footer {
 	clear: both;
 }
 table {
-	width: 98%;
 	border: none;
-	border-collapse: collapse;
-	margin: 0;
 }
 th {
 	text-align: left;	
