@@ -1,7 +1,3 @@
-root = exports ? window
-root.serverDispatcher = serverDispatcher
-root.exposureDispatcher = exposureDispatcher
-
 serverCache = {}
 
 serverDispatcher = (topic, body) ->
@@ -45,3 +41,7 @@ exposureDispatcher = (topic, body) ->
 
   server = serverCache[at] ? mockServer
   server.refresh name size
+
+root = exports ? window
+root.serverDispatcher = serverDispatcher
+root.exposureDispatcher = exposureDispatcher
