@@ -1,3 +1,7 @@
+root = exports ? window
+root.serverDispatcher = serverDispatcher
+root.exposureDispatcher = exposureDispatcher
+
 serverCache = {}
 
 serverDispatcher = (topic, body) ->

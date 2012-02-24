@@ -141,9 +141,9 @@ $ ->
     tenant =   " on " + virtualhost.value
     log "CONNECTING: " + url.value + " " + username.value + tenant
     client.onmessage = (m) =>
-      body = m.body.getString(Charset.UTF8)
-      log "CONSUME: <strong> " + body + "</strong>"
-      body.rewind()
+      s = m.body.getString(Charset.UTF8)
+      log "CONSUME: <strong> " + s + "</strong>"
+      m.body.rewind()
 
     credentials =
       username: username.value
