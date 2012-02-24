@@ -4,8 +4,6 @@ $ ->
 
   # Safari doesn't support details/summary, so using this polyfill
   $('html').addClass(if $.fn.details.support then 'details' else 'no-details')
-#  $('body').prepend(if $.fn.details.support then 'Native support detected; the plugin will only add ARIA annotations and fire custom open/close events.' else 'Emulation active; you are watching the plugin in action!');
-
   $('details').details()
 
   url = document.getElementById("url")
@@ -43,31 +41,37 @@ $ ->
     console.insertBefore pre, console.firstChild
     console.removeChild console.lastChild  while console.childNodes.length > 500
 
-  client = null
+  comm = null
 
   connect.onclick = ->
-    client = new Communicator( log )
+    comm = new Communicator( log )
     tenant =   " on " + virtualhost.value
     log "CONNECTING: " + url.value + " " + username.value + tenant
-    client.onmessage = (m) =>
-      s = m.body.getString(Charset.UTF8)
-      log "CONSUME: <strong> " + s + "</strong>"
-      m.body.rewind()
+    comm.onmessage = (m) =>
+      topic = m.args.routingKey
+      body = m.body.getString(Charset.UTF8)
+      switch m.args.exchange
+        when 'exposures'
+          exposureDispatcher topic, body
+        when 'servers'
+          serverDispatcher topic, body
+      log body
 
     credentials =
       username: username.value
       password: password.value
 
-    client.connect url.value, virtualhost.value, credentials
+    comm.connect url.value, virtualhost.value, credentials
 
 
   disconnect.onclick = ->
-    client.disconnect()
+    comm.disconnect()
 
   startCdl.onclick = ->
-    client.startServer 'cdl'
+    comm.startServer 'cdl'
   startBroker.onclick = ->
-    client.startServer 'broker'
+    comm.startServer 'broker'
+
 
 
   clear.onclick = ->

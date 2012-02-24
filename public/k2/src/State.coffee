@@ -1,5 +1,10 @@
 serverCache = {}
 
+class Server
+  constructor: (@serverType, @name) ->
+
+  updateStats: (@load) ->
+
 serverDispatcher = (topic, body) ->
 
   # topic is
@@ -9,17 +14,17 @@ serverDispatcher = (topic, body) ->
   #  body is like:
   #        name: AAA/NN, load: NN
   s =  body.replace( /\s/g, '')                 # squeeze out whitespace
-  [ _1, server, _2, load ]  =  s.split /\:|,/g  # split on : and ,
+  [ _1, name, _2, load ]  =  s.split /\:|,/g  # split on : and ,
 
   switch state
 
     when 'ready'
-      update server load
+      update serverType, name, load
     when 'stopped'
-      remove server
+      remove name
 
-update = (name, load) ->
-  server = serverCache[name] ?= new server( serverType, name )
+update = (type, name, load) ->
+  server = serverCache[name] ?= new Server( type, name )
   server.updateStats load
 
 remove = (name) ->
