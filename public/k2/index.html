@@ -53,12 +53,15 @@
   <section class="content">
     <table>
       <tr>
-	<td id="0" class="widget">
-	  <div class="serverwidget">
-	    <div class="serverlabel">
+	<td id="slot0" class="slot">
+	  <div id="id0" class="widget">
+	    <div class="at">
 	      CDL/2
 	    </div>
-	    <div class="serverload">Load: <span class="serverloadgraph"></span></div>
+	    <div class="info">
+	      <div class="latest"></div>
+	      <div class="workload">Load: <span class="workloadgraph"></span></div>
+	    </div>
 	    <div class="history">
 	      <details>
 		<summary>History</summary>
@@ -67,17 +70,16 @@
               </details>
 	    </div>
 	  </div>
-
-</td>
-	<td id="1" class="widget"></td>
-	<td id="2" class="widget"></td>
-	<td id="3" class="widget"></td>
+	</td>
+	<td id="1" class="slot"></td>
+	<td id="2" class="slot"></td>
+	<td id="3" class="slot"></td>
       </tr>
       <tr>
-	<td id="4" class="widget"></td>
-	<td id="5" class="widget"></td>
-	<td id="6" class="widget"></td>
-	<td id="7" class="widget"></td>
+	<td id="4" class="slot"></td>
+	<td id="5" class="slot"></td>
+	<td id="6" class="slot"></td>
+	<td id="7" class="slot"></td>
       </tr>
     </table>
   </section>
@@ -106,8 +108,9 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="/js/jquery.details.js"></script>
 	<script type="text/javascript" src="/js/AmqpClient.js"></script>
+	<script type="text/javascript" src="js/Controller.js"></script>
 	<script type="text/javascript" src="js/Communicator.js"></script>
-	<script type="text/javascript" src="js/State.js"></script>	
+	<script type="text/javascript" src="js/Dispatch.js"></script>	
 	<script type="text/javascript" src="js/Client.js"></script>
 	
   </footer>

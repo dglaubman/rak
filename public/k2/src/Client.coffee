@@ -42,6 +42,7 @@ $ ->
     console.removeChild console.lastChild  while console.childNodes.length > 500
 
   comm = null
+  controller = new Controller $("#widget")
 
   connect.onclick = ->
     comm = new Communicator( log )
@@ -52,9 +53,9 @@ $ ->
       body = m.body.getString(Charset.UTF8)
       switch m.args.exchange
         when 'exposures'
-          exposureDispatcher topic, body
+          exposureDispatcher controller, topic, body
         when 'servers'
-          serverDispatcher topic, body
+          serverDispatcher controller, topic, body
       log body
 
     credentials =

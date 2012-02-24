@@ -90,10 +90,9 @@ h5 {
         font-weight: bolder;
 }
 
-.widget {
+.slot {
     height: 300px:
     width: 250px;
-    color: red;
 }
 
 .spacer {
@@ -111,27 +110,23 @@ h5 {
         }
 
 
-.serverwidget {
+.widget {
     position:relative;
-        float:left;
-        padding: 0px 0px 10px 10px;
-        width: 160px;
-	height: 50px;
-        }
-
-
-.history {
-        color: #44687d;
-        border-top: 3px solid #44687d;
-        border-bottom: 3px solid #44687d;
+    float:left;
+    padding: 0px 0px 10px 10px;
+    width: 200px;
+    height: 200px;
 }
 
-
-.serverload {
+.at {
+    display: inline;
+}   
+.workload {
+    display: inline-block;
     width: 80px;
     height: 40px;
 }
-.serverloadgraph {
+.workloadgraph {
         background-color: green;
 	color: red;
 	height: 25%;
@@ -142,9 +137,22 @@ h5 {
 
 }
 
+
+.latest {
+    display: inline-block;
+} 
+
+.history {
+        color: #44687d;
+        border-top: 3px solid #44687d;
+        border-bottom: 3px solid #44687d;
+}
+
+
 .nodisplay {
     display: none;
-}        
+}    
+
 p {
   /* setup some more readable paragraph spacing */
   margin-top: 0px;
