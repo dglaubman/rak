@@ -19,99 +19,99 @@
    
     <ul>
       <li><h4>Start Server</h4></li>
-      <li><button id="startCdl"><h4>CDL Server</h4></button></li>
+       <li><button id="startCdl"><h4>CDL Server</h4></button></li>
       <li class="spacer"></li>
-      <li><button id="startBroker"><h4>Broker</h4></button></li>
+      <li><button id="startTrigger"><h4>Trigger</h4></button></li>
       <li class="spacer"></li>
       <hr/>
       <li><h4>Upload rate</h4></li>
       <li>
 	<p>Small EDM</p>
-	<span>Per minute: <label for="smallEdmSlider" id="smallEdmInputRate">0</label></span>
-	<input id="smallEdmSlider"  type="range" min="0" max="30" value="10" /> 
+	<span>Per minute: <label for="smallEdmSlider" class="rate">0</label></span>
+	<input id="smallEdmSlider"  data-size="S" type="range" min="0" max="10" value="0" /> 
       </li>
       <li class="spacer"></li>
       <hr/>
       <li class="spacer"></li>
       <li>
 	<p>Medium EDM</p>
-	<span>Per minute: <label for="mediumEdmSlider" id="mediumEdmInputRate">0</label></span>
-	<input id="mediumEdmSlider"  type="range" min="0" max="30" value="10" /> 
+	<span>Per minute: <label for="mediumEdmSlider" class="rate">0</label></span>
+	<input id="mediumEdmSlider"  data-size="M" type="range" min="0" max="10" value="0" /> 
       </li>
       <li class="spacer"></li>
       <hr/>
       <li class="spacer"></li>
       <li>
 	<p>Large EDM</p>
-	<span>Per minute: <label for="largeEdmSlider" id="largeEdmInputRate">0</label></span>
-	<input id="largeEdmSlider"  type="range" min="0" max="30" value="10" /> 
+	<span>Per minute: <label for="largeEdmSlider" class="rate">0</label></span>
+	<input id="largeEdmSlider"   data-size="L" type="range" min="0" max="10" value="0" /> 
       </li>
     </ul>
   </section>
 
 
   <section class="content">
-    <table>
-      <tr>
-	<td id="slot0" class="slot">
-	  <div id="id0" class="widget">
-	    <div class="at">
-	      CDL/2
-	    </div>
-	    <div class="info">
-	      <div class="latest"></div>
-	      <div class="workload">Load: <span class="workloadgraph"></span></div>
-	    </div>
-	    <div class="history">
-	      <details>
-		<summary>History</summary>
-		<div id="console"></div>
-		<div><button id="clear">Clear Log</button></div>
-              </details>
-	    </div>
-	  </div>
-	</td>
-	<td id="1" class="slot"></td>
-	<td id="2" class="slot"></td>
-	<td id="3" class="slot"></td>
-      </tr>
-      <tr>
-	<td id="4" class="slot"></td>
-	<td id="5" class="slot"></td>
-	<td id="6" class="slot"></td>
-	<td id="7" class="slot"></td>
-      </tr>
-    </table>
+    <ul class="target slots">
+    </ul>
   </section>
 
   <footer>
-    <section class="copyrightetc"> (rak = RMS + AMQP + Kaazing)</hgroup></header> </section>
-	<section class="nodisplay">
+    <section class="copyrightetc"> (rak = RMS + AMQP + Kaazing) </section>
 
-	  <div id="connection_div">
-            <button id="connect">Connect</button>
-            <button id="disconnect">Disconnect</button>
-	  </div>
+    <section>
+	    <div id="history">
+	      <details>
+		<summary>History</summary>
+		<div  id="console"></div>
+		<div><button  id="clear">Clear Log</button></div>
+              </details>
+	    </div>
+    </section>
 
-	  
-	  
-	  <div id="login_div">
-            <span class="info">AMQP connection info</span>
-            <label for="url">Location</label><input id="url" size="25" ><br/>
-            <label for="virtualhost">Virtual Host</label><input id="virtualhost" size="25" value="/"><br/>
-            <label for="username">User Name</label><input id="username" size="25" value="guest"><br/>
-            <label for="password">Password</label><input type="password" id="password" size="25" value="guest"><br/>
+    <section class="templates nodisplay">
+      <ul class="template slots"> 
+	<li class="slot"
+	  <div class="widget">
+	    <div>
+	      <span class="at">unknown</span>
+	      <img class="close"</img>
+	    </div>
+	    <div class="info">
+	      <span class="latest">*New*</span>
+	      <ul class="verticalBarGraph">
+		<li class="verticalBar"></li>
+	      </ul>
+	    </div>
+	    <div class="history">
+	      <div class="details">
+		<summary>History</summary>
+		<div  class="console"></div>
+		<div><button class="clear">Clear Log</button></div>
+              </div>
+	    </div>
 	  </div>
-	  
-	</section>
+	</li>
+      </ul>
+    </section>
+
+    <section class="nodisplay">
+      <div id="connection_info">
+        <input id="username" size="25" value="guest">
+        <input type="password" id="password" size="25" value="guest">
+        <input id="virtualhost" size="25" value="/">
+        <input id="port" size="25" value="8001">
+      </div>
+    </section>
 	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="/js/jquery.details.js"></script>
-	<script type="text/javascript" src="/js/AmqpClient.js"></script>
-	<script type="text/javascript" src="js/Controller.js"></script>
-	<script type="text/javascript" src="js/Communicator.js"></script>
-	<script type="text/javascript" src="js/Dispatch.js"></script>	
-	<script type="text/javascript" src="js/Client.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="/js/jquery.details.js"></script>
+    <script type="text/javascript" src="/js/AmqpClient.js"></script>
+    <script type="text/javascript" src="js/Utils.js"></script>
+    <script type="text/javascript" src="js/Log.js"></script>
+    <script type="text/javascript" src="js/Controller.js"></script>
+    <script type="text/javascript" src="js/Communicator.js"></script>
+    <script type="text/javascript" src="js/Dispatch.js"></script>	
+    <script type="text/javascript" src="js/Client.js"></script>
 	
   </footer>
 </body>

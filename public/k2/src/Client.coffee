@@ -1,96 +1,55 @@
 $ ->
+  # $('html').addClass(if $.fn.details.support then 'details' else 'no-details')
+  # $('details').details()
 
-  console = document.getElementById("console")
+  log = new Log( $("#console") )
 
-  # Safari doesn't support details/summary, so using this polyfill
-  $('html').addClass(if $.fn.details.support then 'details' else 'no-details')
-  $('details').details()
-
-  url = document.getElementById("url")
-  username = document.getElementById("username")
-  password = document.getElementById("password")
-  virtualhost = document.getElementById("virtualhost")
-
-  startCdl = document.getElementById("startCdl")
-  startBroker = document.getElementById("startBroker")
-
-  clear = document.getElementById("clear")
-  topicText = document.getElementById("topicText")
-
-
-  smallEdmInputRate = document.getElementById("smallEdmInputRate")
-  smallEdmSlider = document.getElementById("smallEdmSlider")
-  smallEdmSlider.onchange = -> (smallEdmInputRate.textContent = @value)
-  smallEdmSlider.onchange()
-
-  mediumEdmInputRate = document.getElementById("mediumEdmInputRate")
-  mediumEdmSlider = document.getElementById("mediumEdmSlider")
-  mediumEdmSlider.onchange = -> (mediumEdmInputRate.textContent = @value)
-  mediumEdmSlider.onchange()
-
-  largeEdmInputRate = document.getElementById("largeEdmInputRate")
-  largeEdmSlider = document.getElementById("largeEdmSlider")
-  largeEdmSlider.onchange = -> (largeEdmInputRate.textContent = @value)
-  largeEdmSlider.onchange()
-
-
-  log = (message) ->
-    pre = document.createElement("pre")
-    pre.style.wordWrap = "break-word"
-    pre.innerHTML = message
-    console.insertBefore pre, console.firstChild
-    console.removeChild console.lastChild  while console.childNodes.length > 500
-
-  comm = null
-  controller = new Controller $("#widget")
-
-  connect.onclick = ->
-    comm = new Communicator( log )
-    tenant =   " on " + virtualhost.value
-    log "CONNECTING: " + url.value + " " + username.value + tenant
-    comm.onmessage = (m) =>
-      topic = m.args.routingKey
-      body = m.body.getString(Charset.UTF8)
-      switch m.args.exchange
-        when 'exposures'
-          exposureDispatcher controller, topic, body
-        when 'servers'
-          serverDispatcher controller, topic, body
-      log body
-
-    credentials =
-      username: username.value
-      password: password.value
-
-    comm.connect url.value, virtualhost.value, credentials
-
-
-  disconnect.onclick = ->
+  # Hook up controls on page
+  $("#disconnect").click ->
     comm.disconnect()
-
-  startCdl.onclick = ->
+  $("#startCdl").click ->
     comm.startServer 'cdl'
-  startBroker.onclick = ->
-    comm.startServer 'broker'
+  $("#startTrigger").click ->
+    comm.startServer 'trigger'
+  $("#clear").click ->
+    log.clear()
 
+  # Range sliders control rate of simulated uploads
 
+  intervalIds = { }
+  $(".left").on 'change', "input[type='range']", (event) ->
+    rate = parseInt( @value, 10 )
+    $(this).siblings('span').children('label').html rate
+    edm = @dataset['size']
+    clearInterval intervalIds[edm] if intervalIds[edm]
+    intervalIds[edm] = every 10000 / rate, ( -> comm.sendWork edm )
 
-  clear.onclick = ->
-    console.removeChild console.lastChild  while console.childNodes.length > 0
+  # Hook up controller and events for array of server widgets
+  widgets = new Controller
+  widgets.stopServer = (name)  => comm.publish( 'workX', "stop #{name}", 'exec' )
 
+  messageHandler = (m) ->
+    topic = m.args.routingKey
+    body = m.body.getString(Charset.UTF8)
+    switch m.args.exchange
+      when 'exposures'
+        exposureDispatcher widgets, topic, body
 
-  hash = location.hash
-#  location.href = "demo.html#amqp"  if hash is ""
-  authority = location.host
-  parts = authority.split(":")
-  parts[1] = 8001
-  ports =
-    http: "80"
-    https: "443"
+      when 'servers'
+        serverDispatcher widgets, topic, body
+    log.write body
 
-  authority = parts[0] + ":" + (parseInt(parts[1] or ports[location.protocol]))
+  comm = new Communicator( log, messageHandler )
 
-  url.value = location.protocol.replace("http", "ws") + "//" + authority + "/amqp"
-  connect.disabled = null
-  disconnect.disabled = "disabled"
-  connect.click()
+  credentials =
+    username: $("#username").val()
+    password: $("#password").val()
+
+  virtualhost = $("#virtualhost").val()
+
+  [host, port] = location.host.split ':'
+  # override port
+  port = $("#port").val()
+  url = location.protocol.replace("http", "ws") + "//" + host + ":" + port + "/amqp"
+
+  comm.connect url, virtualhost, credentials

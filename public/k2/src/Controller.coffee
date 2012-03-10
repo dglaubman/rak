@@ -1,36 +1,68 @@
-class Controller
-  contructor: (@widgets, @err) ->
+root = exports ? window
+class root.Controller
 
-  ready: (type, name, load) =>
-    server = cache[name] ?= make( type, name )
+  ready: (type, name, load) ->
+    server = cache[name] ?= make( type, name, @stopServer )
+    server.updateLoad load
 
   stopped: (name) ->
+    unmake name
 
-  refresh: (name, size, at) ->
+  dataReady: (name, size, at) ->
+    server = cache[at]
+    server?.dataReady name
 
-  make = (type, name) ->
+  stopServer: (event) -> alert "please set action for Controller.stopServer"
+
+  make = (type, name, stopServer) ->
     next = $.inArray 1, avail
-    if next isnt -1
+    unless next is -1
       avail[next] = 0
-      widget = $( "#id#{next}", @widgets)
-      $( ".at", widget).html name
-    else
-      @err
+      inuse[name] = next
+      slot = $('ul.template.slots').children().clone()
+      $('ul.target.slots').append( slot )
+      new Server( slot, type, name, stopServer )
 
-  avail = [1,1,1,1,1,1,1,1]
+  unmake = (name) ->
+    widget = cache[name]
+    widget?.die()
+    delete cache[name]
+    avail[ inuse[name] ] = 1
+    delete inuse[name]
+
+  numSlots = 8
+  avail = (1 for [0...numSlots])
   cache = {}
-                  # server = grid[at] ? grid.error
-  # server.refresh name size
+  inuse = {}
 
-# ready = (type, name, load) ->
-#
-#   server.updateStats load
+class Server
+  constructor: (@widget, type, name, stop ) ->
+    @logger = new Log $(".console", @widget)
+    $( ".at",        @widget ).html name
+    $( ".clear",     @widget ).on 'click', => @logger.clear()
+    $( ".close",     @widget ).on 'click', =>
+      stop name
+      $( @widget ).css( "background-color", "lightgrey" )
 
-# stopped = (name) ->
-#   server = serverCache[name] ? factory.mockserver name
-#   server.unhook()
-#   serverCache[name] = undefined
+  log: (text) => @logger.write text
 
-root = exports ? window
-root.Controller = Controller
+  die: => @widget.remove()
+
+  updateLoad: (load) ->
+    @logger.write load
+    load = Math.min parseInt(load,10), 100
+    switch load
+      when 100
+        @logger.write "it's red"
+        $( ".verticalBar", @widget ).css( "background-color", "red" )
+      else
+        color =  Math.floor(load * 256 / 100)
+        @logger.write "it's #{color}"
+        $( ".verticalBar", @widget ).css( "background-color", "rgb(#{color},255,0)" )
+    $( ".verticalBar", @widget ).css( "height", "#{load}%" )
+  #   @logger.write "load: #{load}"
+
+  dataReady: (name) ->
+    $( ".info > .latest", @widget ).html "#{name} available here"
+    @logger.write "#{name} available"
 

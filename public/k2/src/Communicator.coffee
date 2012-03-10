@@ -1,19 +1,19 @@
 class Communicator
 
-  constructor: (@log) ->
+  constructor: (@log, @onmessage = @onMessageDefault) ->
     @amqp = new AmqpClient
     @amqp.addEventListener "close", =>
-    @log "DISCONNECTED"
+      @log "DISCONNECTED"
+    @portIndex = 0
 
-  connect: ( url, virtualhost, credentials ) ->
+  connect: ( url, virtualhost, credentials) ->
     @amqp.connect url, virtualhost, credentials, "0-9-1" ,
-      (openEvent) =>
-        @log "CONNECTED"
+      (evt) =>
+        @log.write "CONNECTED"
         @channelsReady = 0
         @publishChannel = @amqp.openChannel @publishChannelOpenHandler, @errorHandler
         @exposureChannel = @amqp.openChannel @exposureChannelOpenHandler, @errorHandler
         @serverChannel = @amqp.openChannel @serverChannelOpenHandler, @errorHandler
-
 
   disconnect:  =>
     @amqp.disconnect()
@@ -25,29 +25,33 @@ class Communicator
     headers = {}
     @publishChannel.publishBasic body, headers, exchange, routingKey, false, false
 
+
   startServer: (name) =>
     @publish 'workX', "start #{name}", 'exec'
 
   stopServer: (name) =>
     @publish 'workX', "stop #{name}", 'exec'
 
+  sendWork: (size) =>
+    @publish 'exposures', "name: #{mockPortfolios[size]}/#{@portIndex++}, size: #{size}, at: clientApp", 'edm.ready'
+
   flow: ( onOff ) =>
     @exposureChannel.flowChannel onOff
     @serverChannel.flowChannel onOff
 
   errorHandler: (evt) =>
-    @log "Error: " + evt.type
+    @log.write "Error: " + evt.type
 
-  onmessage: (msg) =>
-    @log "#{msg.args.routingKey}> #{msg.body.getString( Charset.UTF8 )}"
+  onMessageDefault: (msg) =>
+    @log.write "#{msg.args.routingKey}> #{msg.body.getString( Charset.UTF8 )}"
 
   channelOpenHandler: (channel, exchange, type, label) =>
-    @log "open '#{exchange}' channel ok"
+    @log.write "open '#{exchange}' channel ok"
     channel.declareExchange exchange, type, false, false, false
     channel.addEventListener "declareexchange", =>
-      @log "declare '#{exchange}' exchange ok"
+      @log.write "declare '#{exchange}' exchange ok"
     channel.addEventListener "close", =>
-      @log "close '#{exchange}' channel ok"
+      @log.write "close '#{exchange}' channel ok"
     @channelsReady++
     @doBind()  if @channelsReady is 3
 
@@ -62,7 +66,7 @@ class Communicator
 
   listen: (channel, event, label) =>
     channel.addEventListener event, =>
-      @log "#{event} for '#{label}' ok"
+      @log.write "#{event} for '#{label}' ok"
 
   doBind: =>
     @listen @exposureChannel, "declarequeue", "exposure"
@@ -87,6 +91,11 @@ class Communicator
     @serverChannel.declareQueue(sQName, not passive, not durable, exclusive, autoDelete, not noWait).
       bindQueue(sQName, 'servers', "#", not noWait).
       consumeBasic sQName, tag, not noLocal, noAck, noWait, not exclusive
+
+mockPortfolios =
+  S : 'ZurichUS'
+  M : 'Chartis'
+  L : 'Traveler'
 
 root = exports ? window
 root.Communicator = Communicator
