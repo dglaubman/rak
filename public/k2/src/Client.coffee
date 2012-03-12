@@ -22,7 +22,7 @@ $ ->
     $(this).siblings('span').children('label').html rate
     edm = @dataset['size']
     clearInterval intervalIds[edm] if intervalIds[edm]
-    intervalIds[edm] = every 10000 / rate, ( -> comm.sendWork edm )
+    intervalIds[edm] = every 60000 / rate, ( -> comm.sendWork edm )
 
   # Hook up controller and events for array of server widgets
   widgets = new Controller

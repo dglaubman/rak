@@ -38,8 +38,8 @@ border-right:1px solid gray;
 section.content {
     margin-left:190px;
     padding:1em;
+    background-color: light pink;
 }
-
 
 html {
     font-family: Helvetica, Arial, sans-serif;
@@ -78,15 +78,17 @@ h5 {
 }
 
 .slot {
-    height: 350px:
-    width: 250px;
-    margin-left: 20px;
+    margin: 20px;
+    border: 2px solid gray;
     display: inline-block;
 }
 
 .widget {
-    display: block-inline;
+    display: inline-block;
     width: 220px;
+    border-color: x99ffcc;
+    margin 2px;
+
 }
 
 .at {
@@ -123,7 +125,6 @@ h5 {
 	
 .verticalBar {
 	border: 1px solid #555;
-	border-bottom: none;
 	bottom: 0;
 	list-style:none;
 	margin: 0;
@@ -136,7 +137,10 @@ h5 {
 	display: inline-block;
 	}
 
-.li {
+ul {
+    list-style:none;
+}
+li {
     display: block;
 }
 .history {
@@ -148,7 +152,7 @@ h5 {
 .console, #console { 
         position:relative;
         overflow-y: scroll;
-	height: 140px;
+	height: 100px;
         -webkit-overflow-scrolling: touch; 
 }
 

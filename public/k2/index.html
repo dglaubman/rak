@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/cupertino/jquery-ui-1.8.18.custom.css"/>
     <link rel="stylesheet" href="css/k2.css" />
     <title>rak -- RMS over AMQP and Kaazing</title>
 </head>
@@ -17,7 +18,7 @@
  
   <section class="left">
    
-    <ul>
+    <ul class="unordered">
       <li><h4>Start Server</h4></li>
        <li><button id="startCdl"><h4>CDL Server</h4></button></li>
       <li class="spacer"></li>
@@ -28,7 +29,7 @@
       <li>
 	<p>Small EDM</p>
 	<span>Per minute: <label for="smallEdmSlider" class="rate">0</label></span>
-	<input id="smallEdmSlider"  data-size="S" type="range" min="0" max="10" value="0" /> 
+	<input id="smallEdmSlider"  data-size="S" type="range" min="0" max="30" value="0" /> 
       </li>
       <li class="spacer"></li>
       <hr/>
@@ -36,7 +37,7 @@
       <li>
 	<p>Medium EDM</p>
 	<span>Per minute: <label for="mediumEdmSlider" class="rate">0</label></span>
-	<input id="mediumEdmSlider"  data-size="M" type="range" min="0" max="10" value="0" /> 
+	<input id="mediumEdmSlider"  data-size="M" type="range" min="0" max="30" value="0" /> 
       </li>
       <li class="spacer"></li>
       <hr/>
@@ -44,7 +45,7 @@
       <li>
 	<p>Large EDM</p>
 	<span>Per minute: <label for="largeEdmSlider" class="rate">0</label></span>
-	<input id="largeEdmSlider"   data-size="L" type="range" min="0" max="10" value="0" /> 
+	<input id="largeEdmSlider" data-size="L" type="range" min="0" max="30" value="0" /> 
       </li>
     </ul>
   </section>
@@ -70,7 +71,7 @@
 
     <section class="templates nodisplay">
       <ul class="template slots"> 
-	<li class="slot"
+	<li class="slot ui-corner-all">
 	  <div class="widget">
 	    <div>
 	      <span class="at">unknown</span>
@@ -104,6 +105,7 @@
     </section>
 	
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="/js/jquery-ui-1.8.18.custom.min.js"></script>
     <script src="/js/jquery.details.js"></script>
     <script type="text/javascript" src="/js/AmqpClient.js"></script>
     <script type="text/javascript" src="js/Utils.js"></script>

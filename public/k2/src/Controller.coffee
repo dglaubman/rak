@@ -46,21 +46,17 @@ class Server
 
   log: (text) => @logger.write text
 
-  die: => @widget.remove()
+  die: => @widget.hide('slow', => @this.remove() )
 
   updateLoad: (load) ->
-    @logger.write load
     load = Math.min parseInt(load,10), 100
     switch load
       when 100
-        @logger.write "it's red"
         $( ".verticalBar", @widget ).css( "background-color", "red" )
       else
         color =  Math.floor(load * 256 / 100)
-        @logger.write "it's #{color}"
         $( ".verticalBar", @widget ).css( "background-color", "rgb(#{color},255,0)" )
     $( ".verticalBar", @widget ).css( "height", "#{load}%" )
-  #   @logger.write "load: #{load}"
 
   dataReady: (name) ->
     $( ".info > .latest", @widget ).html "#{name} available here"
