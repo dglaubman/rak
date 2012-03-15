@@ -1,0 +1,25 @@
+circle.node {
+
+}
+ellipse.node {
+}
+
+g.node {
+  stroke: #fff;
+}
+
+rect.node {
+
+}
+
+line.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+
+text.node {
+    text-anchor: middle;
+    font: 22px Helvetica;
+    stroke: black;
+    text-rendering: optimizeLegibility;
+}
