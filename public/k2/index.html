@@ -14,21 +14,28 @@
   <div class="body">
     <div class="content">
       <div class="topbar">
-	<a class="build" href="#">here</a>
-	<a class="run" href="#">Run a Workflow</a>
+	<a id="buildpageref" href=".">Build a Workflow</a>
+	<a id="runpageref" href="#">Run a Workflow</a>
       </div>
       <div class="sidebar">
 	<h1>rak</h1>
       </div>
 
-      <h1 class="run">Build a workflow</h1>
+      <h1 id="page">Build a workflow</h1>
       
       <div class='gallery' id='chart'> </div>
       <link href='css/force.css' rel='stylesheet' type='text/css' />
-      <script type="text/javascript" src="/js/d3.v2.js"></script>
+      <script type='text/javascript' src='/js/d3.v2.js'></script>
       <script src='js/dag.js' type='text/javascript'> </script>      
       <script src='js/force.js' type='text/javascript'> </script>
-     
+      <script>
+	d3.select("#buildpageref").on( "click", function() {
+	  d3.select("#page").text("Build a workflow");
+        }); 
+	d3.select("#runpageref").on( "click", function() {
+	  d3.select("#page").text("Run a workflow");
+        });
+      </script>
     </div>
   </div>
   <div class="foot">Powered by <a href="http://mbostock.github.com/d3/" >d3.js</a></div>
