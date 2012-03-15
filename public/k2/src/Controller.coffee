@@ -46,7 +46,7 @@ class Server
 
   log: (text) => @logger.write text
 
-  die: => @widget.hide('slow', => @this.remove() )
+  die: -> @widget.hide('slow', => @widget.remove() )
 
   updateLoad: (load) ->
     load = Math.min parseInt(load,10), 100
