@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <!-- Required for IE6/IE7 cross-origin support -->
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/cupertino/jquery-ui-1.8.18.custom.css"/>
+    <link rel="stylesheet" href="css/k2.css" />
+    <title>rak -- RMS over AMQP and Kaazing</title>
+</head>
+
+<body class="container">
+  <header>
+    <a href="/"><h1>rak</h1></a>
+  </header>
+ 
+  <section class="left">
+   
+    <ul class="unordered">
+      <li><h4>Start Server</h4></li>
+       <li><button id="startCdl"><h4>CDL Server</h4></button></li>
+      <li class="spacer"></li>
+      <li><button id="startTrigger"><h4>Trigger</h4></button></li>
+      <li class="spacer"></li>
+      <hr/>
+      <li><h4>Upload rate</h4></li>
+      <li>
+	<p>Small EDM</p>
+	<span>Per minute: <label for="smallEdmSlider" class="rate">0</label></span>
+	<input id="smallEdmSlider"  data-size="S" type="range" min="0" max="30" value="0" /> 
+      </li>
+      <li class="spacer"></li>
+      <hr/>
+      <li class="spacer"></li>
+      <li>
+	<p>Medium EDM</p>
+	<span>Per minute: <label for="mediumEdmSlider" class="rate">0</label></span>
+	<input id="mediumEdmSlider"  data-size="M" type="range" min="0" max="30" value="0" /> 
+      </li>
+      <li class="spacer"></li>
+      <hr/>
+      <li class="spacer"></li>
+      <li>
+	<p>Large EDM</p>
+	<span>Per minute: <label for="largeEdmSlider" class="rate">0</label></span>
+	<input id="largeEdmSlider" data-size="L" type="range" min="0" max="30" value="0" /> 
+      </li>
+    </ul>
+  </section>
+
+
+  <section class="content">
+    <ul class="target slots">
+    </ul>
+  </section>
+
+  <footer>
+    <section>
+	    <div id="history">
+	      <details>
+		<summary>History</summary>
+		<div  id="console"></div>
+		<div><button  id="clear">Clear Log</button></div>
+              </details>
+	    </div>
+    </section>
+
+    <section class="templates nodisplay">
+      <ul class="template slots"> 
+	<li class="slot ui-corner-all">
+	  <div class="widget">
+	    <div>
+	      <span class="at">unknown</span>
+	      <img class="close"</img>
+	    </div>
+	    <div class="info">
+	      <span class="latest">*New*</span>
+	      <ul class="verticalBarGraph">
+		<li class="verticalBar"></li>
+	      </ul>
+	    </div>
+	    <div class="history">
+	      <div class="details">
+		<summary>History</summary>
+		<div  class="console"></div>
+		<div><button class="clear">Clear Log</button></div>
+              </div>
+	    </div>
+	  </div>
+	</li>
+      </ul>
+    </section>
+
+    <section class="nodisplay">
+      <div id="connection_info">
+        <input id="username" size="25" value="guest">
+        <input type="password" id="password" size="25" value="guest">
+        <input id="virtualhost" size="25" value="/">
+        <input id="port" size="25" value="8001">
+      </div>
+    </section>
+	
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="/js/jquery-ui-1.8.18.custom.min.js"></script>
+    <script src="/js/jquery.details.js"></script>
+    <script type="text/javascript" src="/js/AmqpClient.js"></script>
+    <script type="text/javascript" src="js/Utils.js"></script>
+    <script type="text/javascript" src="js/Log.js"></script>
+    <script type="text/javascript" src="js/Controller.js"></script>
+    <script type="text/javascript" src="js/Communicator.js"></script>
+    <script type="text/javascript" src="js/Dispatch.js"></script>	
+    <script type="text/javascript" src="js/Client.js"></script>
+	
+  </footer>
+</body>
+<!--
+    
+
+    Copyright (c) 2007-2011, Kaazing Corporation. All rights reserved.
+    Modified by D Glaubman at  RMS to support RAK (Risk* with AMQP over Kaazing) prototype
+-->
+
+</html>
