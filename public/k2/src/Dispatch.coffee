@@ -1,7 +1,7 @@
-# Dispatches messages from 'servers' exchange to view
+# Dispatches messages from serverX exchange to view
 serverDispatcher = (controller, topic, body) ->
 
-  # topic :=   [ cdl | broker ] . [ ready | stopped ]
+  # topic :=   [ engine | trigger ] . [ ready | stopped ]
   [ serverType, state ] = topic.split '.'
 
   switch state
@@ -15,19 +15,16 @@ serverDispatcher = (controller, topic, body) ->
     when 'stopped'
       controller.stopped body
 
-# Dispatches messages from 'exposures' exchange to view
-exposureDispatcher = (controller, topic, body) ->
+# Dispatches messages from signalX exchange to view
+signalDispatcher = (controller, topic, body) ->
 
   # body :=  name: ALPHANUM/NUM, size: [S | M | L], at: ALPHANUM/NUM
   s =  body.replace( /\s/g, '')               # squeeze out whitespace
+  alert( s )
   [ _1, name, _2, size, _3, at ]  =  s.split /\:|,/g  # split on : and ,
-
-  switch topic
-
-    when 'cdl.ready'
-      controller.dataReady( name,  size, at )
+  controller.dataReady( name,  size, at )
 
 root = exports ? window
 root.serverDispatcher = serverDispatcher
-root.exposureDispatcher = exposureDispatcher
+root.signalDispatcher = signalDispatcher
 

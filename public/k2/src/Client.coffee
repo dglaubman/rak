@@ -5,37 +5,26 @@ $ ->
   log = new Log( $("#console") )
 
   # Hook up controls on page
-  $("#disconnect").click ->
+  $("#disconnect").on 'click', (evt) ->
     comm.disconnect()
-  $("#startCdl").click ->
-    comm.startServer 'cdl'
-  $("#startTrigger").click ->
-    comm.startServer 'trigger'
-  $("#clear").click ->
+
+  $(".engine").on 'click', (evt) ->
+    comm.startEngine @textContent
+
+  $("#clear").on 'click', ->
     log.clear()
-
-  # Range sliders control rate of simulated uploads
-
-  intervalIds = { }
-  $(".left").on 'change', "input[type='range']", (event) ->
-    rate = parseInt( @value, 10 )
-    $(this).siblings('span').children('label').html rate
-    edm = @dataset['size']
-    clearInterval intervalIds[edm] if intervalIds[edm]
-    intervalIds[edm] = every 60000 / rate, ( -> comm.sendWork edm )
 
   # Hook up controller and events for array of server widgets
   widgets = new Controller
-  widgets.stopServer = (name)  => comm.publish( 'workX', "stop #{name}", 'exec' )
+  widgets.stopServer = (name)  => comm.publish( config.workX, "stop #{name}", config.execQ )
 
   messageHandler = (m) ->
     topic = m.args.routingKey
     body = m.body.getString(Charset.UTF8)
     switch m.args.exchange
-      when 'exposures'
-        exposureDispatcher widgets, topic, body
-
-      when 'servers'
+      when config.signalX
+        signalDispatcher widgets, topic, body
+      when config.serverX
         serverDispatcher widgets, topic, body
     log.write body
 
@@ -45,11 +34,17 @@ $ ->
     username: $("#username").val()
     password: $("#password").val()
 
-  virtualhost = $("#virtualhost").val()
-
   [host, port] = location.host.split ':'
   # override port
   port = $("#port").val()
   url = location.protocol.replace("http", "ws") + "//" + host + ":" + port + "/amqp"
 
-  comm.connect url, virtualhost, credentials
+  config = {
+    serverX: 'serverX'
+    workX:   'workX'
+    signalX: 'signalX'
+    execQ:   'execQ'
+    url:     url
+    virtualhost:  $("#virtualhost").val()
+    }
+  comm.connect config, credentials

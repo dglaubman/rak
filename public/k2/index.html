@@ -25,20 +25,31 @@
       
       <div class='gallery' id='chart'> </div>
       <link href='css/force.css' rel='stylesheet' type='text/css' />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+      <script type='text/javascript' src='/js/AmqpClient.js'></script>
       <script type='text/javascript' src='/js/d3.v2.js'></script>
+      <script src='js/log.js' type='text/javascript'> </script>      
       <script src='js/dag.js' type='text/javascript'> </script>      
-      <script src='js/force.js' type='text/javascript'> </script>
+      <script src='js/buildrak.js' type='text/javascript'> </script>
+      <script src='js/runrak.js' type='text/javascript'> </script>
+      <script src='js/dispatch.js' type='text/javascript'> </script>
+      <script src='js/communicator.js' type='text/javascript'> </script>
+      <script src='js/log.js' type='text/javascript'> </script>
+
       <script>
 	d3.select("#buildpageref").on( "click", function() {
 	  d3.select("#page").text("Build a workflow");
         }); 
 	d3.select("#runpageref").on( "click", function() {
 	  d3.select("#page").text("Run a workflow");
+	  runRak()
         });
       </script>
     </div>
   </div>
-  <div class="foot">Powered by <a href="http://mbostock.github.com/d3/" >d3.js</a></div>
+  <div class="foot">
+Powered by <a href="http://mbostock.github.com/d3/" >d3.js</a>
+<span class="console"></span>
 </body>
 
 </html>

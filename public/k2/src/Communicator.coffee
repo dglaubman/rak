@@ -6,8 +6,8 @@ class Communicator
       @log "DISCONNECTED"
     @portIndex = 0
 
-  connect: ( url, virtualhost, credentials) ->
-    @amqp.connect url, virtualhost, credentials, "0-9-1" ,
+  connect: ( @config, credentials) ->
+    @amqp.connect config.url, config.virtualhost, credentials, "0-9-1" ,
       (evt) =>
         @log.write "CONNECTED"
         @channelsReady = 0
@@ -26,14 +26,15 @@ class Communicator
     @publishChannel.publishBasic body, headers, exchange, routingKey, false, false
 
 
-  startServer: (name) =>
-    @publish 'workX', "start #{name}", 'exec'
+  startEngine: (name) =>
+    @publish @config.workX, "start engine #{name}", @config.execQ
 
-  stopServer: (name) =>
-    @publish 'workX', "stop #{name}", 'exec'
+  stopServer: (pid) =>
+    @publish @config.workX, "stop #{pid}", @config.execQ
 
-  sendWork: (size) =>
-    @publish 'exposures', "name: #{mockPortfolios[size]}/#{@portIndex++}, size: #{size}, at: clientApp", 'edm.ready'
+
+  startRak: (msg, signal) =>
+    @publish @config.signalX, msg, signal
 
   flow: ( onOff ) =>
     @exposureChannel.flowChannel onOff
@@ -56,25 +57,19 @@ class Communicator
     @doBind()  if @channelsReady is 3
 
   publishChannelOpenHandler: (evt) =>
-    @channelOpenHandler evt.channel, 'workX', 'direct'
+    @channelOpenHandler evt.channel, @config.workX, 'direct'
 
   exposureChannelOpenHandler: (evt) =>
-    @channelOpenHandler evt.channel, 'exposures', 'topic'
+    @channelOpenHandler evt.channel, @config.signalX, 'topic'
 
   serverChannelOpenHandler: (evt) =>
-    @channelOpenHandler evt.channel, 'servers', 'topic'
+    @channelOpenHandler evt.channel, @config.serverX, 'topic'
 
   listen: (channel, event, label) =>
     channel.addEventListener event, =>
       @log.write "#{event} for '#{label}' ok"
 
   doBind: =>
-    @listen @exposureChannel, "declarequeue", "exposure"
-    @listen @serverChannel,   "declarequeue", "servers"
-    @listen @exposureChannel, "bindqueue",    "exposure"
-    @listen @serverChannel,   "bindqueue",    "servers"
-    @listen @exposureChannel, "subscribe",    "exposure"
-    @listen @serverChannel,   "subscribe",    "servers"
 
     @exposureChannel.onmessage = @onmessage
     @serverChannel.onmessage = @onmessage
@@ -85,12 +80,12 @@ class Communicator
     qArgs = null
     tag = ""
 
-    @exposureChannel.declareQueue(eQName, not passive, not durable, exclusive, autoDelete, not noWait).
-      bindQueue(eQName, 'exposures', "#", not noWait).
-      consumeBasic eQName, tag, not noLocal, noAck, noWait, not exclusive
-    @serverChannel.declareQueue(sQName, not passive, not durable, exclusive, autoDelete, not noWait).
-      bindQueue(sQName, 'servers', "#", not noWait).
-      consumeBasic sQName, tag, not noLocal, noAck, noWait, not exclusive
+    @exposureChannel.declareQueue(eQName, not passive, not durable, exclusive, autoDelete, not noWait)
+      .bindQueue(eQName, @config.signalX, "#", not noWait)
+      .consumeBasic eQName, tag, not noLocal, noAck, noWait, not exclusive
+    @serverChannel.declareQueue(sQName, not passive, not durable, exclusive, autoDelete, not noWait)
+      .bindQueue(sQName, @config.serverX, "#", not noWait)
+      .consumeBasic sQName, tag, not noLocal, noAck, noWait, not exclusive
 
 mockPortfolios =
   S : 'ZurichUS'

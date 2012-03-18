@@ -8,9 +8,9 @@ class root.Controller
   stopped: (name) ->
     unmake name
 
-  dataReady: (name, size, at) ->
+  dataReady: (text, at) ->
     server = cache[at]
-    server?.dataReady name
+    server?.dataReady text
 
   stopServer: (event) -> alert "please set action for Controller.stopServer"
 
@@ -37,8 +37,9 @@ class root.Controller
 
 class Server
   constructor: (@widget, type, name, stop ) ->
+    at = if (type is 'engine') then name else "#{name} (Trigger)"
     @logger = new Log $(".console", @widget)
-    $( ".at",        @widget ).html name
+    $( ".at",        @widget ).html at
     $( ".clear",     @widget ).on 'click', => @logger.clear()
     $( ".close",     @widget ).on 'click', =>
       stop name
@@ -58,7 +59,7 @@ class Server
         $( ".verticalBar", @widget ).css( "background-color", "rgb(#{color},255,0)" )
     $( ".verticalBar", @widget ).css( "height", "#{load}%" )
 
-  dataReady: (name) ->
-    $( ".info > .latest", @widget ).html "#{name} available here"
-    @logger.write "#{name} available"
+  dataReady: (text) ->
+    $( ".info > .latest", @widget ).html text
+    @logger.write text
 
