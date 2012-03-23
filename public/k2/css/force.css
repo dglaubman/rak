@@ -19,7 +19,18 @@ line.link {
 
 text.node {
     text-anchor: middle;
-    font: 22px Helvetica;
+    font: 18px Helvetica;
     stroke: black;
     text-rendering: optimizeLegibility;
+}
+
+text.status {
+    text-anchor: left;
+    font: 20px Helvetica;
+    stroke: green;
+    text-rendering: optimizeLegibility;
+}
+
+a.signal {
+
 }

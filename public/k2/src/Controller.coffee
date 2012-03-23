@@ -1,6 +1,8 @@
 root = exports ? window
 class root.Controller
 
+  logger = new Log $(".console")
+
   ready: (type, name, load) ->
     server = cache[name] ?= make( type, name, @stopServer )
     server.updateLoad load
@@ -8,9 +10,8 @@ class root.Controller
   stopped: (name) ->
     unmake name
 
-  dataReady: (text, at) ->
-    server = cache[at]
-    server?.dataReady text
+  dataReady: (at, text) ->
+    logger.write "#{at} signal: #{JSON.stringify(text)}"
 
   stopServer: (event) -> alert "please set action for Controller.stopServer"
 
@@ -19,8 +20,8 @@ class root.Controller
     unless next is -1
       avail[next] = 0
       inuse[name] = next
-      slot = $('ul.template.slots').children().clone()
-      $('ul.target.slots').append( slot )
+      slot = $("ul.template.#{type}").children().clone()
+      $("ul.target.#{type}s").append( slot )
       new Server( slot, type, name, stopServer )
 
   unmake = (name) ->
@@ -30,22 +31,23 @@ class root.Controller
     avail[ inuse[name] ] = 1
     delete inuse[name]
 
-  numSlots = 8
+  numSlots = 30
   avail = (1 for [0...numSlots])
   cache = {}
   inuse = {}
 
 class Server
   constructor: (@widget, type, name, stop ) ->
-    at = if (type is 'engine') then name else "#{name} (Trigger)"
-    @logger = new Log $(".console", @widget)
+    at = name
+#    $( ".info > .latest", @widget ).html type
+#    @logger = new Log $(".console", @widget)
     $( ".at",        @widget ).html at
-    $( ".clear",     @widget ).on 'click', => @logger.clear()
+#    $( ".clear",     @widget ).on 'click', => @logger.clear()
     $( ".close",     @widget ).on 'click', =>
       stop name
       $( @widget ).css( "background-color", "lightgrey" )
 
-  log: (text) => @logger.write text
+#  log: (text) => @logger.write text
 
   die: -> @widget.hide('slow', => @widget.remove() )
 
@@ -59,7 +61,4 @@ class Server
         $( ".verticalBar", @widget ).css( "background-color", "rgb(#{color},255,0)" )
     $( ".verticalBar", @widget ).css( "height", "#{load}%" )
 
-  dataReady: (text) ->
-    $( ".info > .latest", @widget ).html text
-    @logger.write text
 

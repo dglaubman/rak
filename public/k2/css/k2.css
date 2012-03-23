@@ -12,7 +12,7 @@ border:1px solid gray;
 line-height:150%;
 }
 
-header,footer
+header
 {
 padding:0.5em;
 color:black;
@@ -79,14 +79,14 @@ h5 {
     margin: 20px;
     border: 2px solid gray;
     display: inline-block;
+    background-color: lightblue;
 }
 
 .widget {
     display: inline-block;
-    width: 220px;
+    width: 160px;
     border-color: x99ffcc;
-    margin 2px;
-
+    margin: 2px;
 }
 
 .at {
@@ -103,7 +103,7 @@ h5 {
 }
 
 .info {
-    width: 200px;
+    width: 120px;
     height: 60px;
 }
 
@@ -119,13 +119,13 @@ h5 {
     float: right;
     position: relative;
     display: block;
+    margin-right: 10px;
 }
 	
 .verticalBar {
 	border: 1px solid #555;
 	bottom: 0;
 	list-style:none;
-	margin: 0;
 	padding: 0;
 	position: absolute;
 	text-align: center;
@@ -148,10 +148,10 @@ li {
 }
 
 .console, #console { 
-        position:relative;
-        overflow-y: scroll;
-	height: 100px;
-        -webkit-overflow-scrolling: touch; 
+    position:relative;
+    overflow-y: scroll; 
+    height: 100px;
+    -webkit-overflow-scrolling: touch; 
 }
 
 .spacer {
@@ -165,7 +165,7 @@ details {
 }
 
 
-#history {
+.history {
     width: 600px;
     margin-left: 190px;
     border-top: 3px solid #44687d;
@@ -206,7 +206,14 @@ ul.arrow-2 li {
         }
 
 
- #login_div {
+#signalLog {
+    margin-top: 100px;
+    overflow-y: scroll;
+    height: 100%;
+    -webkit-overflow-scrolling: touch; 
+}
+
+#login_div {
         position:relative;
         float:left;
         padding: 0px 0px 10px 0px;

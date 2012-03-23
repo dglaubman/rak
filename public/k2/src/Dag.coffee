@@ -16,6 +16,7 @@ dag.from = (d, i) ->
       dag.fromSet = [ d ]
       d.fixed = 1
       d.group = 19
+      d.predecessors = [ 'Start' ]
 
     when dag.states.Selecting, dag.states.Selected
       return alert("Multiple roots not supported.")  if dag.admissible.indexOf(d.name) < 0

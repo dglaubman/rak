@@ -6,7 +6,7 @@ class Communicator
       @log "DISCONNECTED"
     @portIndex = 0
 
-  connect: ( @config, credentials) ->
+  connect: ( @config, credentials, @onconnected) ->
     @amqp.connect config.url, config.virtualhost, credentials, "0-9-1" ,
       (evt) =>
         @log.write "CONNECTED"
@@ -28,6 +28,9 @@ class Communicator
 
   startEngine: (name) =>
     @publish @config.workX, "start engine #{name}", @config.execQ
+
+  startTrigger: (name, rak, signals) =>
+    @publish @config.workX, "start trigger #{name} #{rak} #{signals}", @config.execQ
 
   stopServer: (pid) =>
     @publish @config.workX, "stop #{pid}", @config.execQ
@@ -86,6 +89,7 @@ class Communicator
     @serverChannel.declareQueue(sQName, not passive, not durable, exclusive, autoDelete, not noWait)
       .bindQueue(sQName, @config.serverX, "#", not noWait)
       .consumeBasic sQName, tag, not noLocal, noAck, noWait, not exclusive
+    @onconnected?()
 
 mockPortfolios =
   S : 'ZurichUS'

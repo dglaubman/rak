@@ -1,7 +1,8 @@
 $ ->
   # $('html').addClass(if $.fn.details.support then 'details' else 'no-details')
   # $('details').details()
-
+  #
+  semver = "0.1.0"            # Semantic versioning - semver.org
   log = new Log( $("#console") )
 
   # Hook up controls on page
@@ -29,22 +30,4 @@ $ ->
     log.write body
 
   comm = new Communicator( log, messageHandler )
-
-  credentials =
-    username: $("#username").val()
-    password: $("#password").val()
-
-  [host, port] = location.host.split ':'
-  # override port
-  port = $("#port").val()
-  url = location.protocol.replace("http", "ws") + "//" + host + ":" + port + "/amqp"
-
-  config = {
-    serverX: 'serverX'
-    workX:   'workX'
-    signalX: 'signalX'
-    execQ:   'execQ'
-    url:     url
-    virtualhost:  $("#virtualhost").val()
-    }
-  comm.connect config, credentials
+  comm.connect config, config.credentials

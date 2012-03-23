@@ -18,11 +18,7 @@ serverDispatcher = (controller, topic, body) ->
 # Dispatches messages from signalX exchange to view
 signalDispatcher = (controller, topic, body) ->
 
-  # body :=  name: ALPHANUM/NUM, size: [S | M | L], at: ALPHANUM/NUM
-  s =  body.replace( /\s/g, '')               # squeeze out whitespace
-  alert( s )
-  [ _1, name, _2, size, _3, at ]  =  s.split /\:|,/g  # split on : and ,
-  controller.dataReady( name,  size, at )
+  controller.dataReady( topic, JSON.parse body )
 
 root = exports ? window
 root.serverDispatcher = serverDispatcher
