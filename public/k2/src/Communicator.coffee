@@ -1,5 +1,7 @@
 class Communicator
 
+  semver: "0.1.1"
+
   constructor: (@log, @onmessage = @onMessageDefault) ->
     @amqp = new AmqpClient
     @amqp.addEventListener "close", =>

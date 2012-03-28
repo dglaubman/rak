@@ -1,9 +1,9 @@
 width = 960
 height = 500
-widgetWidth = 80
+widgetWidth = 100
 widgetHeight = 48
-knobRadius = 10
-squareSide = 14
+knobRadius = 12
+squareSide = 18
 color = d3.scale.category20()
 nodes = [
     name: "Upload"
@@ -40,10 +40,10 @@ link = svg.selectAll("line.link")
 
 node = svg.selectAll("g.node")
     .data(nodes)
-  .enter()
+    .enter()
     .append("g")
     .attr("class", "node")
-    .attr("transform", (d) -> "translate(" + d.x + ", " + d.y + ");")
+#    .attr("transform", (d, i) -> "translate(" + d.x + ", " + d.y + ")")
 
 ellipses = node
     .append("ellipse")
@@ -133,12 +133,11 @@ force.on "tick", ->
       .attr( "dx", (d) -> d.x  )
       .attr( "dy", (d) -> d.y - widgetHeight / 2 )
 
-d3.select("#buildpageref").on "click", ->
-  d3.select("#page").text("Build a workflow")
+$("#buildpageref").on "click", ->
+  $("#page").text("Build a workflow")
 
-d3.select("#runpageref").on "click",  ->
-  d3.select("#page").text("Run a workflow")
-  force.stop()
+$("#runpageref").on "click",  ->
+  $("#page").text("Run a workflow")
   runRak()
 
 

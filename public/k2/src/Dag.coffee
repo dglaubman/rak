@@ -1,4 +1,4 @@
-dag = version: "0.1.0"
+dag = version: "0.1.1"
 dag.states =
   Begin: 0
   Selecting: 1

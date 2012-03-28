@@ -1,6 +1,6 @@
 $ ->
 
-  semver: "0.1.0"
+  semver: "0.1.1"
 
   runRak = ->
 
@@ -30,12 +30,13 @@ $ ->
       @startId = 0
       @svg = d3.select("#chart")
       @links = @svg.selectAll("line.link")
+      @svg.selectAll("g.node").select( (d,i) ->  if (d.fixed is 1)   then null else  this).remove()
       @nodes = @svg.selectAll("g.node")
-      @nodes.select( (d, i) -> if d.fixed is 1 then null else this  ).remove()
       @msgs = @nodes.selectAll("text.status")
       @signalData = []
       @replay = d3.select("#signalLog")
-      @replay.selectAll("a.signal").on( "click", (d,i) -> alert( "hello" ) )
+
+      #   .on( "click", "button", (event) -> alert( "hello" ) )
 
     init: (@comm) ->
 
@@ -44,7 +45,7 @@ $ ->
 
       @nodes.on "click", (d,i) =>
         msg =
-          ver: "0.1.0"
+          ver: @comm.semver
           id: @startId
           rakIds: [ @rakId ]
           payload:
@@ -57,21 +58,26 @@ $ ->
     stopped: (name) ->
 
     dataReady: (signal, msg) ->
+
       @signalData.push { signal: signal, msg: msg }
       @replay
-          .selectAll( "a.signal")
+          .selectAll( "button.signal")
           .data( @signalData )
         .enter()
-          .insert( "a" )
+          .append( "button" )
           .attr( "class", "signal" )
-          .attr( "href", "#" )
-          .html( (d,i) -> "<h4>#{d.signal}: #{d.msg.payload.src}</h4>" )
+          .on( "click", ((d,i) -> alert "HI, mom"), true )
+          .text( (d,i) -> "#{d.signal}: #{d.msg.payload.src}" )
       text = JSON.stringify msg
       @log.write "#{signal}: #{text}"
       if signal isnt 'Start'
         @nodes.select( (d,i) -> this if d.name is signal )
           .select( ".status" )
           .text( "#{msg.payload.src} is #{msg.payload.status}" )
+          .attr( "opacity", 0 )
+          .transition()
+          .duration(1200)
+          .attr( "opacity", 1 )
 
     stopServer: (event) -> alert "please set action for Controller.stopServer"
 

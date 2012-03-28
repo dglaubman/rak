@@ -7,16 +7,18 @@
 body.container
 {
 width:100%;
+height: 100%;
 margin:0px;
 border:1px solid gray;
 line-height:150%;
 }
 
-header
+header, footer
 {
 padding:0.5em;
 color:black;
 clear:left;
+background-color: lightblue;
 }
 
 header > h1
@@ -32,12 +34,13 @@ width:160px;
 margin:0;
 padding:1em;
 border-right:1px solid gray;
+border-color: lightgreen;
 }
 
 section.content {
     margin-left:190px;
     padding:1em;
-    background-color: light pink;
+    background-color: lightpink;
 }
 
 html {
@@ -198,52 +201,12 @@ a:hover {
         text-decoration: none;
 }
 
-ul.arrow-2 li {
-        background: url(../img/arrow-2.png) 2px 2px no-repeat;
-        list-style: none;
-        padding-left: 25px;
-        padding-bottom: 5px;
-        }
-
-
 #signalLog {
     margin-top: 100px;
     overflow-y: scroll;
     height: 100%;
     -webkit-overflow-scrolling: touch; 
 }
-
-#login_div {
-        position:relative;
-        float:left;
-        padding: 0px 0px 10px 0px;
-        width:380px;
-        height: 200px;
-        }
-
-
-#connection_info {
-    display: none;
-        }
-        
-#subscribe_div {
-        position:relative;
-        float:left;
-        padding: 0px 0px 10px 10px;
-        width: 420px;
-        height: 200px;
-        }
-
-#exchange_div {
-        position:relative;
-        float:left;
-        padding: 0px 0px 10px 10px;
-        width: 420px;
-        height: 210px;
-        }
-
-
-
 
 details, summary { display: block; }
 			/* Apply a pointer cursor and style the background upon hover to indicate <summary> is a clickable element. */
@@ -255,59 +218,3 @@ details, summary { display: block; }
     display: none;
 }
 
-
-
-.tdHeader{
-        text-align:left;
-}
-
-.downChange {
-        background:url(../img/down.png) center left no-repeat;
-        position:relative;
-
-        font-weight:bold;
-        color:red;
-        text-align:right; 
-    padding-right:10px;
-}
-
-.upPercent {
-        font-weight:bold;
-        color:green;
-        text-align:right; 
-    padding-right:10px;
-}
-
-.downPercent {
-        font-weight:bold;
-        color:red;
-        text-align:right; 
-    padding-right:10px;
-}
-
-#commands_div {
-        position:relative;
-        float:left;
-        height:255px;
-        padding-left:5px
-}
-
-
-			.no-details details > * { display: none; }
-			/* This doesn’t work very well in Firefox 3.6.x */
-			/* .no-details details[open] > * { display: block; } */
-			/* The following doesn’t toggle correctly in WebKit:
-			.no-details details summary:before { content: '► '; }
-			.no-details details[open] summary:before { content: '▼ '; }
-			*/
-			/* And yes, it should really be ::before, but that doesn’t work in IE8 */
-			.no-details details summary:before { float: left; width: 20px; content: '► '; }
-			.no-details details.open summary:before { content: '▼ '; }
-			/* For IE6 and IE7, who don’t support generated content, you could use padding-left + a background image instead */
-			/* I really couldn’t be bothered though. */
-			/*
-			.no-details details summary { padding-left: 20px; background: url(img/arrow-sprite.png) no-repeat 0 0; }
-			.no-details details.open summary { background-position: 0 -20px; }
-			*/
-			/* Make sure summary remains visible */
-			.no-details details summary { display: block; }

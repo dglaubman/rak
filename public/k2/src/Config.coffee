@@ -1,6 +1,6 @@
 root = exports ? this
 
-semver = "0.1.0"
+semver = "0.1.1"
 
 root.config =
   serverX: 'serverX'

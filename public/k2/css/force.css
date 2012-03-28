@@ -22,15 +22,16 @@ text.node {
     font: 18px Helvetica;
     stroke: black;
     text-rendering: optimizeLegibility;
+    pointer-events: none;
 }
 
 text.status {
     text-anchor: left;
-    font: 20px Helvetica;
+    font: 16px Helvetica;
     stroke: green;
     text-rendering: optimizeLegibility;
 }
 
 a.signal {
-
+    
 }

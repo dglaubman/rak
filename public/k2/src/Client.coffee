@@ -2,7 +2,9 @@ $ ->
   # $('html').addClass(if $.fn.details.support then 'details' else 'no-details')
   # $('details').details()
   #
-  semver = "0.1.0"            # Semantic versioning - semver.org
+  semver = "0.1.1"            # Semantic versioning - semver.org
+  # Polyfill a given set of elements
+  $('details').details()
   log = new Log( $("#console") )
 
   # Hook up controls on page
