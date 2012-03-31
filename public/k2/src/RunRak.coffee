@@ -66,7 +66,7 @@ $ ->
         .enter()
           .append( "button" )
           .attr( "class", "signal" )
-          .on( "click", ((d,i) -> alert "HI, mom"), true )
+          .on( "click", (d,i) => @comm.startRak JSON.stringify( msg ), signal )
           .text( (d,i) -> "#{d.signal}: #{d.msg.payload.src}" )
       text = JSON.stringify msg
       @log.write "#{signal}: #{text}"
@@ -77,7 +77,7 @@ $ ->
           .attr( "opacity", 0 )
           .transition()
           .duration(1200)
-          .attr( "opacity", 1 )
+          .attr("opacity", 1)
 
     stopServer: (event) -> alert "please set action for Controller.stopServer"
 

@@ -1,5 +1,5 @@
-width = 960
-height = 500
+width = 720
+height = 570
 widgetWidth = 100
 widgetHeight = 48
 knobRadius = 12

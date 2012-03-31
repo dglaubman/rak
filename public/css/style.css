@@ -42,17 +42,8 @@ a:hover {
 
 .gallery {
   position: relative;
-  left: -240px;
-  width: 970px;
-}
-
-.content .gallery img {
-  display: inline;
-  width: 226px;
-  height: 180px;
-  border: solid 2px #ccc;
-  margin-right: 10px;
-  margin-bottom: 8px;
+  left: 0;
+  width: 720px;
 }
 
 .content .gallery a:hover img {
@@ -98,8 +89,8 @@ h1 {
   font-weight: 300;
   margin-left: 240px;
   padding-top: 3em;
-  width: 710px;
-  clear: both;
+  width: 720px;
+  clear: left;
 }
 
 button {
