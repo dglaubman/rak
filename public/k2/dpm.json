@@ -1,13 +1,13 @@
 { 
 "nodes": [ 
-  { "name": "Refresh",	"group": 1 }, 
+  { "name": "Refresh",	"group": 1, "value": "start" }, 
   { "name": "ETL2DW", 	"group": 2 }, 
   { "name": "Rollup",  "group": 3 }, 
   { "name": "Reinstate",  "group": 4}, 
   { "name": "Report", 	"group": 5 }, 
-  { "name": "Merge", 	"group": 6 },
-  { "name": "Upload",	"group": 7 }, 
-  { "name": "Import", 	"group": 8 } 
+  { "name": "Merge", 	"group": 6, "value": "end" },
+  { "name": "Upload",	"group": 7, "value": "start" }, 
+  { "name": "Import", 	"group": 8, "value": "end"  } 
 ],
  
 "links": 

@@ -19,7 +19,7 @@ line.link {
 
 text.node {
     text-anchor: middle;
-    font: 18px Helvetica;
+    font: 12px Helvetica;
     stroke: black;
     text-rendering: optimizeLegibility;
     pointer-events: none;
@@ -32,6 +32,27 @@ text.status {
     text-rendering: optimizeLegibility;
 }
 
-a.signal {
-    
+.history {
+        border-top: 2px solid #44687d;
+        border-bottom: 2px solid #44687d;
+	position: relative;
+}
+
+.console, #console { 
+    position:relative;
+    overflow-y: scroll; 
+    height: 100px;
+    -webkit-overflow-scrolling: touch; 
+}
+
+
+.signal {
+    display: block;
+}
+
+#signalLog {
+    margin-top: 100px;
+    overflow-y: scroll;
+    height: 100%;
+    -webkit-overflow-scrolling: touch; 
 }

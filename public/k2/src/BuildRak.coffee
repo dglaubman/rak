@@ -6,7 +6,7 @@ knobRadius = 12
 squareSide = 18
 color = d3.scale.category20()
 nodes = [
-    name: "Upload"
+    name: "YLT"
     group: 1
   ,
     name: "Compile"
@@ -15,16 +15,16 @@ nodes = [
     name: "Geocode"
     group: 5
   ,
-    name: "Analyze"
+    name: "RLFM"
     group: 7
   ,
-    name: "Report"
+    name: "EP"
     group: 9
   ,
-    name: "Approve"
+    name: "MDRCV"
     group: 11
   ,
-    name: "Rollup"
+    name: "EP Viewer"
     group: 13
 ]
 
@@ -66,7 +66,7 @@ rects = node
         links.push
           source: source.index
           target: d.index
-          value: "1"
+          rak: "1"
       restart()
 
 circles = node
@@ -101,6 +101,7 @@ restart = ->
       .append("line")
       .attr("class", "link")
       .style("stroke-width", (d) ->  3  )
+      .style("color", (d) -> color d.rak )
       .attr("x1", (d) -> d.source.x + widgetWidth / 2 + knobRadius )
       .attr("y1", (d) -> d.source.y )
       .attr("x2", (d) -> d.target.x - widgetWidth / 2 - squareSide / 2  )
@@ -140,6 +141,9 @@ $("#runpageref").on "click",  ->
   $("#page").text("Run a workflow")
   runRak()
 
+$("#dpmpageref").on "click",  ->
+  $("#page").text("DPM: Refresh Portfolio Report")
+  runDpm()
 
 force.nodes(nodes).links links
 restart()

@@ -1,8 +1,8 @@
 width = 960
 height = 500
 
-nodeWidth = 80
-nodeHeight = 50
+nodeWidth = 60
+nodeHeight = 44
 
 color = d3.scale.category20()
 
@@ -22,6 +22,13 @@ d3.json("dpm.json", (json) ->
       .links(json.links)
       .start()
 
+
+  node = svg.selectAll("g.node")
+      .data(json.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .call(force.drag)
+
   link = svg.selectAll("line.link")
       .data(json.links)
     .enter().append("line")
@@ -29,17 +36,24 @@ d3.json("dpm.json", (json) ->
       .style("stroke-width", (d) -> 4 )
       .style("stroke", (d) -> color d.value )
 
-  node = svg.selectAll("circle.node")
-      .data(json.nodes)
-    .enter().append("ellipse")
+  node.each (d) ->
+    d.fixed = (d.value is 'start' or d.value is 'end') if d.value?
+
+
+  geom = node
+      .insert("ellipse")
+      .attr("opacity", .6)
       .attr("class", "node")
       .attr("rx", nodeWidth / 2 )
       .attr("ry", nodeHeight / 2 )
       .style("fill", (d) -> color d.group )
-      .call(force.drag)
 
   node.append("title")
       .text((d) -> d.name)
+
+  text = node.append("text")
+      .attr("class", "node")
+      .text( (d) -> d.name )
 
   force.on("tick", ->
     link.attr("x1", (d) -> d.source.x)
@@ -47,7 +61,10 @@ d3.json("dpm.json", (json) ->
         .attr("x2", (d) -> d.target.x)
         .attr("y2", (d) -> d.target.y)
 
-    node.attr("cx", (d) -> d.x)
+    geom.attr("cx", (d) -> d.x)
         .attr("cy", (d) -> d.y)
-   )
+
+    text.attr( "dx", (d) -> d.x)
+        .attr( "dy", (d) -> d.y)
+  )
 )

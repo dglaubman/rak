@@ -5,7 +5,6 @@ $ ->
   runRak = ->
 
     log = new Log $(".console")
-
     messageHandler = (m) ->
       topic = m.args.routingKey
       body = m.body.getString(Charset.UTF8)
