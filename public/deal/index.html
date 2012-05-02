@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>Deal Demo</title>
+  <style type="text/css">
+    @import url("/css/style.css");
+    @import url("/css/syntax.css");
+  </style>
+</head>
+
+<body>
+  <div class="body">
+    <div class="content">
+      <div class="topbar">
+	<a id="profileref" href="#">Profile</a>
+	<a id="editref" href="#">Edit</a>
+      </div>
+
+      <h1 id="page">ExpoNet</h1>
+
+      <div class='sidebar'>
+	<ul><li data-deal='aon'><a href="#active">Aon 2012</a></li></ul>
+	<ul><li deal='zurich'><a href="#active">Zurich 2012</a></li></ul>
+	<ul><li deal='trav'><a href="#active">Travelers 2012</a></li></ul>
+      </div>
+      <div class='gallery' id="active">
+	<div class='chart'></div>
+      </div>
+      
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+      <script type='text/javascript' src='/js/AmqpClient.js'></script>
+      <script type='text/javascript' src='/js/d3.v2.js'></script>
+      <script type='text/javascript' src='js/deal.js'></script>
+    </div>
+
+  </div>
+  <div class="foot">
+    Powered by <a href="http://mbostock.github.com/d3/" >d3.js</a>
+  </div>
+
+
+</body>
+
+</html>

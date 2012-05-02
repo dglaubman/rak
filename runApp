@@ -1,2 +1,3 @@
 coffee -o public/k2/js/ -c public/k2/src/
+coffee -o public/deal/js/ -c public/deal/src/
 coffee app $1

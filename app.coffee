@@ -12,12 +12,6 @@ app.configure 'development', ->
 app.get '/', (req, res) ->
   res.render 'index'
 
-app.get '/rak', (req, res) ->
-  res.render 'rak'
-
-app.get '/forex', (req, res) ->
-  res.render 'forex'
-
 app.listen(port)
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env)
 

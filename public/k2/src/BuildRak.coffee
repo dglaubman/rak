@@ -6,7 +6,7 @@ knobRadius = 12
 squareSide = 18
 color = d3.scale.category20()
 nodes = [
-    name: "YLT"
+    name: "Upload"
     group: 1
   ,
     name: "Compile"
@@ -15,16 +15,16 @@ nodes = [
     name: "Geocode"
     group: 5
   ,
-    name: "RLFM"
+    name: "Damage"
     group: 7
   ,
     name: "EP"
     group: 9
   ,
-    name: "MDRCV"
+    name: "ContractLoss"
     group: 11
   ,
-    name: "EP Viewer"
+    name: "EP"
     group: 13
 ]
 
