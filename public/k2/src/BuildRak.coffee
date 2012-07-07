@@ -15,16 +15,16 @@ nodes = [
     name: "Geocode"
     group: 5
   ,
-    name: "Damage"
+    name: "Event"
     group: 7
   ,
-    name: "EP"
+    name: "Damage"
     group: 9
   ,
     name: "ContractLoss"
     group: 11
   ,
-    name: "EP"
+    name: "Report"
     group: 13
 ]
 

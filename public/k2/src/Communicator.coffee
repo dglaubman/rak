@@ -31,12 +31,14 @@ class Communicator
   startEngine: (name) =>
     @publish @config.workX, "start engine #{name}", @config.execQ
 
+  startAdapter: (name) =>
+    @publish @config.workX, "start adapter #{name}", @config.execQ
+
   startTrigger: (name, rak, signals) =>
     @publish @config.workX, "start trigger #{name} #{rak} #{signals}", @config.execQ
 
   stopServer: (pid) =>
     @publish @config.workX, "stop #{pid}", @config.execQ
-
 
   startRak: (msg, signal) =>
     @publish @config.signalX, msg, signal

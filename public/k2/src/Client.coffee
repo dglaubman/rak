@@ -14,6 +14,9 @@ $ ->
   $(".engine").on 'click', (evt) ->
     comm.startEngine @textContent
 
+  $(".adapter").on 'click', (evt) ->
+    comm.startAdapter @textContent
+
   $("#clear").on 'click', ->
     log.clear()
 

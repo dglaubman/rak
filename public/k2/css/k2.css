@@ -150,7 +150,10 @@ li {
 	position: relative;
 }
 
-.console, #console { 
+#signalLog {
+   height: 500px;
+}
+.console, #console, #signalLog { 
     position:relative;
     overflow-y: scroll; 
     height: 100px;
