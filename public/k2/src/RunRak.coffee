@@ -72,7 +72,7 @@ $ ->
       if signal isnt 'Start'
         @nodes.select( (d,i) -> this if d.name is signal )
           .select( ".status" )
-          .text( "#{msg.payload.src} is #{msg.payload.status}" )
+          .text( "#{msg.payload.src} - #{msg.payload.status}" )
           .attr( "opacity", 0 )
           .transition()
           .duration(1200)

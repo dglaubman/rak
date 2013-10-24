@@ -6,6 +6,7 @@ $ ->
   # Polyfill a given set of elements
   $('details').details()
   log = new Log( $("#console") )
+  log.write "Starting up ..."
 
   # Hook up controls on page
   $("#disconnect").on 'click', (evt) ->

@@ -26,6 +26,15 @@ nodes = [
   ,
     name: "Report"
     group: 13
+  ,
+    name: "Blend"
+    group: 15
+  ,
+    name: "Zip"
+    group: 17
+  ,
+    name: "GeoHaz"
+    group: 19
 ]
 
 links = []

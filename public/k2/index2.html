@@ -4,7 +4,7 @@
 <head>
     <!-- Required for IE6/IE7 cross-origin support -->
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/css/cupertino/jquery-ui-1.8.18.custom.css"/>
     <link rel="stylesheet" href="css/k2.css" />
@@ -27,6 +27,9 @@
        <li><button class="ui-corner-all engine" ><h4>Damage</h4></button></li>
        <li><button class="ui-corner-all engine" ><h4>ContractLoss</h4></button></li>
        <li><button class="ui-corner-all engine" ><h4>Report</h4></button></li>
+       <li><button class="ui-corner-all engine" ><h4>Blend</h4></button></li>
+       <li><button class="ui-corner-all engine" ><h4>Zip</h4></button></li>
+       <li><button class="ui-corner-all engine" ><h4>GeoHaz</h4></button></li>
     </ul>
   </section>
 
@@ -36,14 +39,13 @@
     <h2>Triggers</h2>
     <ul class="target triggers">
     </ul>
-  </section>
 
   <footer>
     <section>
 	    <div class="history">
 	      <details>
 	      <summary>History</summary>
-	      <div class="console"></div>
+	      <div id="console"></div>
 		<div><button  id="clear">Clear Log</button></div>
               </details>
 	    </div>
@@ -93,8 +95,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
     <script src="/js/jquery.details.js"></script>
     <script src="/js/jquery-ui-1.8.18.custom.min.js"></script>
-    <script src="js/config.js" type="text/javascript"> </script>      
     <script type="text/javascript" src="/js/AmqpClient.js"></script>
+    <script src="js/config.js" type="text/javascript"> </script>      
     <script type="text/javascript" src="js/Utils.js"></script>
     <script type="text/javascript" src="js/Log.js"></script>
     <script type="text/javascript" src="js/Controller.js"></script>
@@ -104,11 +106,4 @@
 	
   </footer>
 </body>
-<!--
-    
-
-    Copyright (c) 2007-2011, Kaazing Corporation. All rights reserved.
-    Modified by D Glaubman at  RMS to support RAK (Risk* with AMQP over Kaazing) prototype
--->
-
 </html>

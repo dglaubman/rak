@@ -3,21 +3,22 @@ class Communicator
   semver: "0.1.1"
 
   constructor: (@log, @onmessage = @onMessageDefault) ->
-    @amqp = new AmqpClient
+    @amqp = new AmqpClient()
     @amqp.addEventListener "close", =>
-      @log "DISCONNECTED"
+      @log.write "DISCONNECTED"
+    @amqp.addEventListener "error", (e) =>
+      @log.write "error: #{e.message}"
     @portIndex = 0
 
   connect: ( @config, credentials, @onconnected) ->
-    @amqp.connect config.url, config.virtualhost, credentials, "0-9-1" ,
-      (evt) =>
+    @amqp.connect {url: config.url, virtualHost: config.virtualhost, credentials: credentials} , (evt) =>
         @log.write "CONNECTED"
         @channelsReady = 0
-        @publishChannel = @amqp.openChannel @publishChannelOpenHandler, @errorHandler
-        @exposureChannel = @amqp.openChannel @exposureChannelOpenHandler, @errorHandler
-        @serverChannel = @amqp.openChannel @serverChannelOpenHandler, @errorHandler
+        @publishChannel = @amqp.openChannel @publishChannelOpenHandler
+        @exposureChannel = @amqp.openChannel @exposureChannelOpenHandler
+        @serverChannel = @amqp.openChannel @serverChannelOpenHandler
 
-  disconnect:  =>
+  disconnect: =>
     @amqp.disconnect()
 
   publish:  ( exchange, text, routingKey ) =>
@@ -25,7 +26,7 @@ class Communicator
     body.putString text, Charset.UTF8
     body.flip()
     headers = {}
-    @publishChannel.publishBasic body, headers, exchange, routingKey, false, false
+    @publishChannel.publishBasic {body: body, exchange: exchange, routingKey: routingKey}
 
 
   startEngine: (name) =>
@@ -64,13 +65,13 @@ class Communicator
     @doBind()  if @channelsReady is 3
 
   publishChannelOpenHandler: (evt) =>
-    @channelOpenHandler evt.channel, @config.workX, 'direct'
+    @channelOpenHandler @publishChannel, @config.workX, 'direct'
 
   exposureChannelOpenHandler: (evt) =>
-    @channelOpenHandler evt.channel, @config.signalX, 'topic'
+    @channelOpenHandler @exposureChannel, @config.signalX, 'topic'
 
   serverChannelOpenHandler: (evt) =>
-    @channelOpenHandler evt.channel, @config.serverX, 'topic'
+    @channelOpenHandler @serverChannel, @config.serverX, 'topic'
 
   listen: (channel, event, label) =>
     channel.addEventListener event, =>
